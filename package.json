@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev-local": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -12,7 +13,8 @@
     "next": "14.2.13",
     "pnpm": "^9.11.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "supabase": "^1.200.3"
   },
   "devDependencies": {
     "@types/node": "^20",
