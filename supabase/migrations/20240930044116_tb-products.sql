@@ -1,8 +1,7 @@
---- create schema
-CREATE SCHEMA IF NOT EXISTS tb;
+
 
 --- Table: Customers Table
-create table tb.Customers (
+create table Customers (
     id uuid not null default gen_random_uuid (),
     user_id uuid not null,
     phone text not null,
@@ -21,7 +20,7 @@ create table tb.Customers (
 
 
 -- Table: Products
-CREATE TABLE tb.Products (
+CREATE TABLE Products (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -34,7 +33,7 @@ CREATE TABLE tb.Products (
 );
 
 -- Table: Features
-CREATE TABLE tb.Features (
+CREATE TABLE Features (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -43,17 +42,17 @@ CREATE TABLE tb.Features (
 );
 
 -- Table: ProductFeature (Association Table)
-CREATE TABLE tb.ProductFeature (
+CREATE TABLE ProductFeature (
     id UUID PRIMARY KEY,
-    featureId UUID NOT NULL REFERENCES tb.Features(id),
-    productId UUID NOT NULL REFERENCES tb.Products(id)
+    featureId UUID NOT NULL REFERENCES Features(id),
+    productId UUID NOT NULL REFERENCES Products(id)
 );
 
 -- Table: Subscription
-CREATE TABLE tb.Subscription (
+CREATE TABLE Subscription (
     id UUID PRIMARY KEY,
-    userId UUID NOT NULL REFERENCES tb.Customers(id),
-    productId UUID NOT NULL REFERENCES tb.Products(id),
+    userId UUID NOT NULL REFERENCES Customers(id),
+    productId UUID NOT NULL REFERENCES Products(id),
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     auto_renewal BOOLEAN DEFAULT TRUE,
@@ -62,10 +61,10 @@ CREATE TABLE tb.Subscription (
 );
 
 -- Table: Invoice
-CREATE TABLE tb.Invoice (
+CREATE TABLE Invoice (
     id UUID PRIMARY KEY,
-    userId UUID NOT NULL REFERENCES tb.Customers(id),
-    subscriptionId UUID NOT NULL REFERENCES tb.Subscription(id),
+    userId UUID NOT NULL REFERENCES Customers(id),
+    subscriptionId UUID NOT NULL REFERENCES Subscription(id),
     payment_gateway VARCHAR(255),
     razorpayId UUID,
     amount DECIMAL(10, 2),
@@ -75,7 +74,7 @@ CREATE TABLE tb.Invoice (
 );
 
 -- Table: Razor_pay_details
-CREATE TABLE tb.Razor_pay_details (
+CREATE TABLE Razor_pay_details (
     UniqueID UUID PRIMARY KEY,
     razorpay_order_id VARCHAR(255),
     currency VARCHAR(3),
@@ -83,9 +82,9 @@ CREATE TABLE tb.Razor_pay_details (
 );
 
 -- Table: ProductPricing
-CREATE TABLE tb.ProductPricing (
+CREATE TABLE ProductPricing (
     id UUID PRIMARY KEY,
-    productId UUID NOT NULL REFERENCES tb.Products(id),
+    productId UUID NOT NULL REFERENCES Products(id),
     price DECIMAL(10, 2),
     currency VARCHAR(3),
     is_active BOOLEAN DEFAULT TRUE,
