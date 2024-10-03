@@ -6,12 +6,13 @@ import { Logger } from 'nestjs-pino';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
   app.useLogger(app.get(Logger));
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: '1',
+    defaultVersion: configService.get('API_VERSION'),
   });
-  const configService = app.get(ConfigService);
+  
   const config = new DocumentBuilder()
     .setTitle(configService.get('APP_NAME'))
     .setDescription('Product API')
