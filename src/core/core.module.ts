@@ -17,18 +17,14 @@ export class CoreModule {
 
             if (driver === 'orm') {
               return {
+                         
                 type: 'postgres',
-                host: 'localhost',
-                port: 5432,
-                password: 'pass123',
-                username: 'postgres',
-            
-                // type: 'postgres',
-                // host: configService.get<string>('DATABASE_HOST'),
-                // port: configService.get<number>('DATABASE_PORT', 5432),
-                // username: configService.get<string>('DATABASE_USER'),
-                // password: configService.get<string>('DATABASE_PASSWORD'),
-                // database: configService.get<string>('DATABASE_DB'),
+                host: configService.get<string>('DATABASE_HOST'),
+                port: configService.get<number>('DATABASE_PORT', 5432),
+                username: configService.get<string>('DATABASE_USER'),
+                password: configService.get<string>('DATABASE_PASSWORD'),
+                database: configService.get<string>('DATABASE_DB'),
+                //Needed for supabase
                 // ssl: {
                 //   rejectUnauthorized: false, 
                 // },
