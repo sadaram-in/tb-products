@@ -3,12 +3,12 @@ import { ProductEntity } from '../entities/product.entities';
 export class ProductMapper {
     static toDomain(productEntity: ProductEntity): Product {
     
-      const alarmModel = new Product(
+      const productModel = new Product(
         productEntity.id,
         productEntity.name,
         //rest of the product fields
       );
-      return alarmModel;
+      return productModel;
     }
   
     static toPersistence(product: Product) {

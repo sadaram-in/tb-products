@@ -11,8 +11,9 @@ async function bootstrap() {
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: configService.get('API_VERSION'),
+    prefix: 'v',
   });
-  
+ 
   const config = new DocumentBuilder()
     .setTitle(configService.get('APP_NAME'))
     .setDescription('Product API')

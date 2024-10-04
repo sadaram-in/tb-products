@@ -7,7 +7,6 @@ import { Product } from "../product"
 export class ProductFactory {
   create(name: string) {
     const id = randomUUID();
-   
-    return new Product(id, name);
+     return new Product(id, name);
   }
 }
