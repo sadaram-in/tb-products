@@ -9,6 +9,8 @@ import { IProductRepository } from '../domain/ports/products.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductEntity } from '../infrastructure/persistance/orm/entities/product.entities';
 import { GetProductsByIdQueryHandler } from './queries/get-products-by-id.query-handler';
+import { UpdateProductCommand } from './commands/update-product.command';
+import { UpdateProductCommandHandler } from './commands/update-product.command-handler';
 @Module({
   imports: [TypeOrmModule.forFeature([ProductEntity])],
   controllers: [ProductsController],
@@ -22,6 +24,7 @@ import { GetProductsByIdQueryHandler } from './queries/get-products-by-id.query-
     CreateProductCommandHandler,
     GetProductsQueryHandler,
     GetProductsByIdQueryHandler,
+    UpdateProductCommandHandler,
   ],
 })
 export class ProductsModule {}

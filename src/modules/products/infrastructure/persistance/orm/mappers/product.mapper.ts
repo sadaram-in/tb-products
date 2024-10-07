@@ -23,6 +23,7 @@ export class ProductMapper {
       entity.changeLog = product.changeLog;
       entity.effective_from = product.effective_from;
       entity.effective_to = product.effective_to;
+      entity.is_active = product.is_active;
       return entity;
     }
   }

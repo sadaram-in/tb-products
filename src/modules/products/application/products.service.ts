@@ -3,6 +3,7 @@ import { CreateProductCommand } from './commands/create-product.command';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetProductsQuery } from './queries/get-products.query';
 import { GetProductsByIdQuery } from './queries/get-products-by-id.query';
+import { UpdateProductCommand } from './commands/update-product.command';
 
 @Injectable()
 export class ProductsService {
@@ -24,9 +25,16 @@ export class ProductsService {
     return this.queryBus.execute(new GetProductsByIdQuery(id));
   }
 
-  // update(id: number, updateProductDto: UpdateProductDto) {
-  //   return `This action updates a #${id} product`;
-  // }
+  async update(id: string, updateProductCommand: UpdateProductCommand) {
+    // First, check if the product exists
+    const product = await this.queryBus.execute(new GetProductsByIdQuery(id));
+
+    if (!product) {
+      throw new Error(`Product with ID ${id} not found`);
+    }
+
+    return await this.commandBus.execute(updateProductCommand);
+  }
 
   // remove(id: number) {
   //   return `This action removes a #${id} product`;
