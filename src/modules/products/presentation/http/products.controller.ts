@@ -11,27 +11,24 @@ import { ProductsService } from '../../application/products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateProductCommand } from '../../application/commands/create-product.command';
 
-@Controller('products')
+@Controller({
+  path: 'products',
+  version: '1', // Ensure versioning is handled
+})
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  // @Post()
-  // create(@Body() createProductDto: CreateProductDto) {
-  //   return this.productsService.create(new CreateProductCommand(CreateProductDto.name));
-
-  // }
-
-  // @Get()
-  // findAll() {
-  //   //implement query command
-  //   return this.productsService.findAll();
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    // console.log('---------- bp --------- id endpoint');
+    return this.productsService.findOne(id);
+  }
 
   @Get()
   findAll() {
     return this.productsService.findAll();
   }
-  
+
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(
@@ -45,14 +42,6 @@ export class ProductsController {
       ),
     );
   }
-
-  //TODO add GET by id , PUT update and DELETE
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   //implement query command
-  //   return this.productsService.findOne(+id);
-  // }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {

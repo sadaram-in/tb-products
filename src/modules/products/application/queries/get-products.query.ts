@@ -1,1 +1,2 @@
-export class GetProductsQuery {}
+export class GetProductsQuery {
+}

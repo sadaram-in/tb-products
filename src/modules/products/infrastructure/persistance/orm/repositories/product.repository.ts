@@ -15,7 +15,14 @@ export class ProductRepository implements IProductRepository {
 
   async findAll(): Promise<Product[]> {
     const entities = await this.productRepository.find();
+    // console.log(entities);
     return entities.map((item) => ProductMapper.toDomain(item));
+  }
+
+  async findOne(id: string): Promise<Product> {
+    const entity = await this.productRepository.findOne({ where: { id } });
+    return ProductMapper.toDomain(entity);
+    // return null;
   }
 
   async save(product: Product): Promise<Product> {
