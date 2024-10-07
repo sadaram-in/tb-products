@@ -6,7 +6,11 @@ export class ProductMapper {
       const productModel = new Product(
         productEntity.id,
         productEntity.name,
-        //rest of the product fields
+        productEntity.description,
+        productEntity.changeLog,
+        productEntity.effective_from,
+        productEntity.effective_to,
+        productEntity.is_active,
       );
       return productModel;
     }
@@ -15,7 +19,10 @@ export class ProductMapper {
       const entity = new ProductEntity();
       entity.id = product.id;
       entity.name = product.name;
-     //rest of the product fields
+      entity.description = product.description;
+      entity.changeLog = product.changeLog;
+      entity.effective_from = product.effective_from;
+      entity.effective_to = product.effective_to;
       return entity;
     }
   }

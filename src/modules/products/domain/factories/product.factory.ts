@@ -1,12 +1,20 @@
-import { Injectable } from "@nestjs/common";
-import { randomUUID } from "crypto";
-import { Product } from "../product"
+// domain/factories/product.factory.ts
 
+import { ProductEntity } from '../../infrastructure/persistance/orm/entities/product.entities';
+import { CreateProductDto } from '../../presentation/http/dto/create-product.dto';
 
-@Injectable()
 export class ProductFactory {
-  create(name: string) {
-    const id = randomUUID();
-     return new Product(id, name);
+  create(createProductDto: CreateProductDto): ProductEntity {
+    const { name, description, changeLog, effective_from, effective_to, is_active } = createProductDto;
+
+    const product = new ProductEntity();
+    product.name = name;
+    product.description = description;
+    product.changeLog = changeLog;
+    product.effective_from = effective_from;
+    product.effective_to = effective_to;
+    product.is_active = is_active;
+
+    return product;
   }
 }

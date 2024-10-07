@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from '../../application/products.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductCommand } from '../../application/commands/create-product.command';
 
 @Controller('products')
@@ -29,13 +28,22 @@ export class ProductsController {
   // }
 
   @Get()
-  getLeo() {
-    return 'leo';
+  findAll() {
+    return this.productsService.findAll();
   }
-
+  
   @Post()
-  postLeo() {
-    return 'leo';
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.productsService.create(
+      new CreateProductCommand(
+        createProductDto.name,
+        createProductDto.description,
+        createProductDto.changeLog,
+        createProductDto.effective_from,
+        createProductDto.effective_to,
+        createProductDto.is_active,
+      ),
+    );
   }
 
   //TODO add GET by id , PUT update and DELETE

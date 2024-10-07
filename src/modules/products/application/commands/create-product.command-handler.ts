@@ -17,9 +17,20 @@ export class CreateProductCommandHandler
 
   async execute(command: CreateProductCommand) {
     this.logger.debug(
-      `Processing "CreateProductCommand": ${JSON.stringify(command)}`,
+      `Processing "CreateProductCommand" with data: ${JSON.stringify(command)}`,
     );
-    const product = this.productFactory.create(command.name);
+
+    // Use the factory to create a product entity from the command data
+    const product = this.productFactory.create({
+      name: command.name,
+      description: command.description,
+      changeLog: command.changeLog,
+      effective_from: command.effective_from,
+      effective_to: command.effective_to,
+      is_active: command.is_active,
+    });
+
+    // Save the product entity using the repository
     return this.productRepository.save(product);
   }
 }
