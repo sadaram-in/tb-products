@@ -63,8 +63,8 @@ export class ProductsController {
     return await this.productsService.update(id, updateProductCommand);
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.productsService.remove(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.productsService.remove(id);
+  }
 }

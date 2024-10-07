@@ -33,4 +33,8 @@ export class ProductRepository implements IProductRepository {
     console.log(newEntity);
     return ProductMapper.toDomain(newEntity);
   }
+ 
+  async delete(id: string): Promise<void> {
+    await this.productRepository.delete(id);
+  }
 }

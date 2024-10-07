@@ -11,6 +11,7 @@ import { ProductEntity } from '../infrastructure/persistance/orm/entities/produc
 import { GetProductsByIdQueryHandler } from './queries/get-products-by-id.query-handler';
 import { UpdateProductCommand } from './commands/update-product.command';
 import { UpdateProductCommandHandler } from './commands/update-product.command-handler';
+import { DeleteProductCommandHandler } from './commands/delete-product.command-handler';
 @Module({
   imports: [TypeOrmModule.forFeature([ProductEntity])],
   controllers: [ProductsController],
@@ -25,6 +26,7 @@ import { UpdateProductCommandHandler } from './commands/update-product.command-h
     GetProductsQueryHandler,
     GetProductsByIdQueryHandler,
     UpdateProductCommandHandler,
+    DeleteProductCommandHandler,
   ],
 })
 export class ProductsModule {}
