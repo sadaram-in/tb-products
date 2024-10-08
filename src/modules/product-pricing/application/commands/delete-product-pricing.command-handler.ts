@@ -19,5 +19,5 @@ export class DeleteProductPricingCommandHandler
     if (!pricing) throw new Error(`Product pricing with ID ${id} not found`);
 
     await this.productPricingRepository.delete(id);
+    return { message: `Product pricing with ID ${id} deleted successfully` };}
   }
-}

@@ -99,7 +99,6 @@ export class ProductPricingController {
     if (!productPricing) {
       throw new NotFoundException(`ProductPricing with ID ${id} not found`);
     }
-
     const command = new DeleteProductPricingCommand(id);
     return this.commandBus.execute(command);
   }
