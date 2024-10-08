@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CoreModule } from './core/core.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ProductsModule } from './modules/products/application/products.module';
+import { ProductPricingModule } from './modules/product-pricing/application/product-pricing.module';
 
 
 @Module({
@@ -14,6 +15,7 @@ import { ProductsModule } from './modules/products/application/products.module';
     CqrsModule.forRoot(),
     HealthModule,
     ProductsModule,
+    ProductPricingModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
