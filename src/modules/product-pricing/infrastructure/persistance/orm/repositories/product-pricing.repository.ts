@@ -24,7 +24,6 @@ export class ProductPricingRepository implements IProductPricingRepository {
   }
 
   async save(productPricing: ProductPricing): Promise<ProductPricing> {
-    console.log(productPricing)
     const persistenceModel = ProductPricingMapper.toPersistence(productPricing);
     const newEntity = await this.productPricingRepository.save(persistenceModel);
     return ProductPricingMapper.toDomain(newEntity);

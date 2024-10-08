@@ -1,43 +1,36 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UpdateProductPricingCommand } from './update-product-pricing.command';
 import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
 import { ProductPricing } from '../../domain/product-pricing';
-import { Inject, Logger } from '@nestjs/common';
+import { UpdateProductPricingCommand } from './update-product-pricing.command';
+import { Inject } from '@nestjs/common';
 
 @CommandHandler(UpdateProductPricingCommand)
 export class UpdateProductPricingCommandHandler
   implements ICommandHandler<UpdateProductPricingCommand>
 {
-  private readonly logger = new Logger(UpdateProductPricingCommandHandler.name);
-
   constructor(
     @Inject('IProductPricingRepository')
     private readonly productPricingRepository: IProductPricingRepository,
   ) {}
 
-  async execute(command: UpdateProductPricingCommand) {
-    this.logger.debug(
-      `Processing UpdateProductPricingCommand with data: ${JSON.stringify(command)}`,
-    );
+  async execute(command: UpdateProductPricingCommand): Promise<ProductPricing> {
+    const { id, price, currency, effective_from, effective_to, is_active } =
+      command;
 
-    let existingPricing = await this.productPricingRepository.findOne(
-      command.id,
-    );
-
-    if (!existingPricing) {
-      throw new Error(`ProductPricing with ID ${command.id} not found`);
+    // Logic to update the product using the repository
+    const productToUpdate = await this.productPricingRepository.findOne(id);
+    if (!productToUpdate) {
+      throw new Error(`Product with ID ${id} not found`);
     }
-
-    existingPricing = new ProductPricing(
-      command.id,
-      existingPricing.product_id,
-      command.price || existingPricing.price,
-      command.currency || existingPricing.currency,
-      command.isActive || existingPricing.is_active,
-      command.effectiveFrom || existingPricing.effective_from,
-      command.effectiveTo || existingPricing.effective_to,
-    );
-
-    return this.productPricingRepository.save(existingPricing);
+    // console.log(is_active);
+    // Update the product properties
+    productToUpdate.price = price;
+    productToUpdate.currency = currency;
+    productToUpdate.effective_from = effective_from;
+    productToUpdate.effective_to = effective_to;
+    productToUpdate.is_active = is_active;
+    // console.log(productToUpdate);
+    // Save the updated product
+    return await this.productPricingRepository.save(productToUpdate);
   }
 }

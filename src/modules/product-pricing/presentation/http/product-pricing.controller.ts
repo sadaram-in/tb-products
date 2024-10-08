@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   NotFoundException,
+  Patch,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateProductPricingCommand } from '../../application/commands/create-product-pricing.command';
@@ -71,7 +72,7 @@ export class ProductPricingController {
   }
 
   // UPDATE an existing ProductPricing by ID
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: string,
     @Body() updateProductPricingDto: UpdateProductPricingDto,

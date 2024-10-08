@@ -1,11 +1,11 @@
 export class ProductPricing {
   constructor(
-    public readonly id: string,
-    public readonly product_id: string,
-    public readonly price: number,
-    public readonly currency: string,
-    public readonly is_active: boolean,
-    public readonly effective_from: Date,
-    public readonly effective_to: Date | null,
+    public id: string,
+    public product_id: string,
+    public price: number,
+    public currency: string,
+    public is_active: boolean,
+    public effective_from: Date,
+    public effective_to: Date | null,
   ) {}
 }

@@ -3,8 +3,8 @@ export class UpdateProductPricingCommand {
     public readonly id: string,
     public readonly price?: number,
     public readonly currency?: string,
-    public readonly isActive?: boolean,
-    public readonly effectiveFrom?: Date,
-    public readonly effectiveTo?: Date,
+    public readonly is_active?: boolean,
+    public readonly effective_from?: Date,
+    public readonly effective_to?: Date,
   ) {}
 }
