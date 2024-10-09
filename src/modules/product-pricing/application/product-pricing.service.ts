@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { GetProductPricingQuery } from './queries/get-product-pricing.query';
+import { GetProductPricingByIdQuery } from './queries/get-product-pricing-by-id.query';
 import { CreateProductPricingCommand } from './commands/create-product-pricing.command';
 import { UpdateProductPricingCommand } from './commands/update-product-pricing.command';
 import { DeleteProductPricingCommand } from './commands/delete-product-pricing.command';
-import { GetProductPricingQuery } from './queries/get-product-pricing.query';
-import { GetProductPricingByIdQuery } from './queries/get-product-pricing-by-id.query';
 
 @Injectable()
 export class ProductPricingService {
@@ -14,6 +14,7 @@ export class ProductPricingService {
   ) {}
 
   create(createProductPricingCommand: CreateProductPricingCommand) {
+    // console.log('post request is made ', createProductPricingCommand);
     return this.commandBus.execute(createProductPricingCommand);
   }
 

@@ -1,15 +1,13 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { UpdateProductPricingCommand } from './update-product-pricing.command';
 import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
 import { ProductPricing } from '../../domain/product-pricing';
-import { UpdateProductPricingCommand } from './update-product-pricing.command';
-import { Inject } from '@nestjs/common';
 
 @CommandHandler(UpdateProductPricingCommand)
 export class UpdateProductPricingCommandHandler
   implements ICommandHandler<UpdateProductPricingCommand>
 {
   constructor(
-    @Inject('IProductPricingRepository')
     private readonly productPricingRepository: IProductPricingRepository,
   ) {}
 

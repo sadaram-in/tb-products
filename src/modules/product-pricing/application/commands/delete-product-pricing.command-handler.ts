@@ -1,23 +1,17 @@
+
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { ProductPricingRepository } from '../../infrastructure/persistance/orm/repositories/product-pricing.repository';
 import { DeleteProductPricingCommand } from './delete-product-pricing.command';
-import { Inject } from '@nestjs/common';
+import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
 
 @CommandHandler(DeleteProductPricingCommand)
 export class DeleteProductPricingCommandHandler
   implements ICommandHandler<DeleteProductPricingCommand>
 {
   constructor(
-    @Inject('IProductPricingRepository')
-    private readonly productPricingRepository: ProductPricingRepository,
+    private readonly productPricingRepository: IProductPricingRepository,
   ) {}
 
-  async execute(command: DeleteProductPricingCommand) {
-    const { id } = command;
-
-    const pricing = await this.productPricingRepository.findOne(id);
-    if (!pricing) throw new Error(`Product pricing with ID ${id} not found`);
-
-    await this.productPricingRepository.delete(id);
-    return { message: `Product pricing with ID ${id} deleted successfully` };}
+  async execute(command: DeleteProductPricingCommand): Promise<void> {
+    await this.productPricingRepository.delete(command.id);
   }
+}

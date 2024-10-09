@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CqrsModule } from '@nestjs/cqrs';
+
 
 import { ProductPricingController } from '../presentation/http/product-pricing.controller';
 import { ProductPricingRepository } from '../infrastructure/persistance/orm/repositories/product-pricing.repository';
@@ -17,15 +17,17 @@ import { GetProductPricingsQueryHandler } from './queries/get-product-pricing.qu
 
 // Factories
 import { ProductPricingFactory } from '../domain/factories/product-pricing.factory';
+import { ProductPricingService } from './product-pricing.service';
+import { IProductPricingRepository } from '../domain/ports/product-pricing.repository';
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule.forFeature([ProductPricingEntity])],
+  imports: [TypeOrmModule.forFeature([ProductPricingEntity])],
   controllers: [ProductPricingController],
   providers: [
+    ProductPricingService,
     ProductPricingFactory,
-
     {
-      provide: 'IProductPricingRepository',
+      provide: IProductPricingRepository,
       useClass: ProductPricingRepository,
     },
 

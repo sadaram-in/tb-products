@@ -1,32 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { ProductPricing } from '../product-pricing';
-import { randomUUID } from 'crypto';
+import { ProductPricingEntity } from "../../infrastructure/persistance/orm/entities/product-pricing.entities"; 
+import { CreateProductPricingDto } from "../../presentation/http/dto/create-product-pricing.dto";
 
-@Injectable()
 export class ProductPricingFactory {
-  create({
-    productId,
-    price,
-    currency,
-    isActive,
-    effectiveFrom,
-    effectiveTo,
-  }: {
-    productId: string;
-    price: number;
-    currency: string;
-    isActive: boolean;
-    effectiveFrom: Date;
-    effectiveTo: Date | null;
-  }): ProductPricing {
-    return new ProductPricing(
-      randomUUID(),
-      productId,
-      price,
-      currency,
-      isActive,
-      effectiveFrom,
-      effectiveTo,
-    );
+  create(createProductPricingDto: CreateProductPricingDto): ProductPricingEntity {
+    const { product_id, price, currency, is_active, effective_from, effective_to } = createProductPricingDto;
+
+    const productPricing = new ProductPricingEntity();
+    productPricing.product_id = product_id;
+    productPricing.price = price;
+    productPricing.currency = currency;
+    productPricing.is_active = is_active;
+    productPricing.effective_from = effective_from;
+    productPricing.effective_to = effective_to;
+
+    return productPricing;
   }
 }

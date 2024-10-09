@@ -1,25 +1,43 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { ProductEntity } from 'src/modules/products/infrastructure/persistance/orm/entities/product.entities';
 
 @Entity('product_pricing')
 export class ProductPricingEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  productId: string;
+  @ManyToOne(() => ProductEntity, (product) => product.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'product_id' })
+  product_id: string;
 
-  @Column('decimal')
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 3 })
   currency: string;
 
-  @Column()
-  isActive: boolean;
+  @Column({ type: 'boolean', default: true })
+  is_active: boolean;
 
-  @Column()
-  effectiveFrom: Date;
+  @Column({ type: 'date', nullable: false })
+  effective_from: Date;
 
-  @Column({ nullable: true })
-  effectiveTo: Date;
+  @Column({ type: 'date', nullable: true })
+  effective_to: Date;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updated_at: Date;
 }

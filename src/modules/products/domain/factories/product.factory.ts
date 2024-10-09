@@ -1,5 +1,3 @@
-// domain/factories/product.factory.ts
-
 import { ProductEntity } from '../../infrastructure/persistance/orm/entities/product.entities';
 import { CreateProductDto } from '../../presentation/http/dto/create-product.dto';
 

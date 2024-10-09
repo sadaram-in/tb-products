@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductCommand } from './commands/create-product.command';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetProductsQuery } from './queries/get-products.query';
 import { GetProductsByIdQuery } from './queries/get-products-by-id.query';
+import { CreateProductCommand } from './commands/create-product.command';
 import { UpdateProductCommand } from './commands/update-product.command';
 import { DeleteProductCommand } from './commands/delete-product.command';
 

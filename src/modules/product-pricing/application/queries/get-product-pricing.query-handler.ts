@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
-import { Inject, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { GetProductPricingQuery } from './get-product-pricing.query';
 
 @QueryHandler(GetProductPricingQuery)
@@ -10,7 +10,6 @@ export class GetProductPricingsQueryHandler
   private readonly logger = new Logger(GetProductPricingsQueryHandler.name);
 
   constructor(
-    @Inject('IProductPricingRepository')
     private readonly productPricingRepository: IProductPricingRepository,
   ) {}
 

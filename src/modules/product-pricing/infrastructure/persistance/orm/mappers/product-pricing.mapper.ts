@@ -1,28 +1,30 @@
 import { ProductPricing } from '../../../../domain/product-pricing';
 import { ProductPricingEntity } from '../entities/product-pricing.entities';
+import { ProductEntity } from 'src/modules/products/infrastructure/persistance/orm/entities/product.entities';
 
 export class ProductPricingMapper {
   static toDomain(entity: ProductPricingEntity): ProductPricing {
     return new ProductPricing(
       entity.id,
-      entity.productId,
+      entity.product_id,
       entity.price,
       entity.currency,
-      entity.isActive,
-      entity.effectiveFrom,
-      entity.effectiveTo,
+      entity.is_active,
+      entity.effective_from,
+      entity.effective_to,
     );
   }
 
   static toPersistence(domain: ProductPricing): ProductPricingEntity {
     const entity = new ProductPricingEntity();
     entity.id = domain.id;
-    entity.productId = domain.product_id;
+    entity.product_id = domain.product_id;
+
     entity.price = domain.price;
     entity.currency = domain.currency;
-    entity.isActive = domain.is_active;
-    entity.effectiveFrom = domain.effective_from;
-    entity.effectiveTo = domain.effective_to || null;
+    entity.is_active = domain.is_active;
+    entity.effective_from = domain.effective_from;
+    entity.effective_to = domain.effective_to || null;
     return entity;
   }
 }
