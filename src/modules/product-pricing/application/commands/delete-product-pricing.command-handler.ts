@@ -1,4 +1,3 @@
-
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { DeleteProductPricingCommand } from './delete-product-pricing.command';
 import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
@@ -11,7 +10,8 @@ export class DeleteProductPricingCommandHandler
     private readonly productPricingRepository: IProductPricingRepository,
   ) {}
 
-  async execute(command: DeleteProductPricingCommand): Promise<void> {
-    await this.productPricingRepository.delete(command.id);
+  async execute(command: DeleteProductPricingCommand) {
+    this.productPricingRepository.delete(command.id);
+    return { message: `Product with ID ${command.id} deleted successfully` };
   }
 }

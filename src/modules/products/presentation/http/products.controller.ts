@@ -60,7 +60,7 @@ export class ProductsController {
       updateProductDto.is_active,
     );
 
-    return await this.productsService.update(id, updateProductCommand);
+    return this.productsService.update(id, updateProductCommand);
   }
 
   @Delete(':id')
