@@ -15,15 +15,17 @@ import { GetProductsByIdQueryHandler } from './queries/get-products-by-id.query-
 import { ProductFactory } from '../domain/factories/product.factory';
 import { ProductsService } from './products.service';
 import { IProductRepository } from '../domain/ports/products.repository';
+import { ResponseService } from 'src/shared/response/response.service';
 @Module({
   imports: [TypeOrmModule.forFeature([ProductEntity])],
   controllers: [ProductsController],
   providers: [
     ProductsService,
+    ResponseService,
     ProductFactory,
     {
       provide: IProductRepository,
-      useClass: ProductRepository, // 💡 This is where we bind the port to an adapter
+      useClass: ProductRepository, 
     },
     CreateProductCommandHandler,
     GetProductsQueryHandler,

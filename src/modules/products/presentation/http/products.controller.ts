@@ -22,7 +22,6 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    // console.log('---------- bp --------- id endpoint');
     return this.productsService.findOne(id);
   }
 

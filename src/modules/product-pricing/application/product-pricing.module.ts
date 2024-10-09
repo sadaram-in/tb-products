@@ -19,12 +19,14 @@ import { GetProductPricingsQueryHandler } from './queries/get-product-pricing.qu
 import { ProductPricingFactory } from '../domain/factories/product-pricing.factory';
 import { ProductPricingService } from './product-pricing.service';
 import { IProductPricingRepository } from '../domain/ports/product-pricing.repository';
+import { ResponseService } from 'src/shared/response/response.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([ProductPricingEntity])],
   controllers: [ProductPricingController],
   providers: [
     ProductPricingService,
+    ResponseService,
     ProductPricingFactory,
     {
       provide: IProductPricingRepository,

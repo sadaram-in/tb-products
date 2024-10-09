@@ -10,7 +10,7 @@ export class GetProductsByIdQueryHandler
   constructor(private readonly productRepository: IProductRepository) {}
 
   async execute(query: GetProductsByIdQuery): Promise<Product> {
-    // console.log("-------- Fetching product with ID ---------", query.id);
+    // console.log('-------- Fetching product with ID ---------', query.id);
     const product = await this.productRepository.findOne(query.id);
 
     if (!product) {

@@ -20,7 +20,7 @@ export class CreateProductPricingCommandHandler
       `Processing CreateProductPricingCommand with data: ${JSON.stringify(command)}`,
     );
 
-    console.log(command);
+    // console.log(command);
     if (!command.product_id) {
       return { message: 'Product ID is required.' };
     }
