@@ -8,12 +8,14 @@ import { CoreModule } from './core/core.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ProductsModule } from './modules/products/application/products.module';
 import { ProductPricingModule } from './modules/product-pricing/application/product-pricing.module';
-
+import { DatabaseModule } from './shared/database/database.module';
+import { ResponseService } from './shared/response/response.service';
 
 @Module({
   imports: [
     CqrsModule.forRoot(),
     HealthModule,
+    DatabaseModule,
     ProductsModule,
     ProductPricingModule,
     ConfigModule.forRoot({
@@ -23,6 +25,6 @@ import { ProductPricingModule } from './modules/product-pricing/application/prod
     CoreModule.forRootAsync(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ResponseService],
 })
 export class AppModule {}

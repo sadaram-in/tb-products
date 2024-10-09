@@ -13,7 +13,7 @@ import { ProductEntity } from 'src/modules/products/infrastructure/persistance/o
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: configService.get<string>('DATABASE_TYPE') as 'postgres', // You can adjust this for other types
+        type: configService.get<string>('DATABASE_TYPE') as 'postgres', 
         host: configService.get<string>('DATABASE_HOST'),
         port: configService.get<number>('DATABASE_PORT'),
         username: configService.get<string>('DATABASE_USER'),
