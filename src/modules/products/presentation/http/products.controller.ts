@@ -6,13 +6,17 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProductsService } from '../../application/products.service';
 import { CreateProductCommand } from '../../application/commands/create-product.command';
 import { UpdateProductCommand } from '../../application/commands/update-product.command';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
 
+
+@UseInterceptors(LoggingInterceptor)
 @Controller({
   path: 'products',
   version: '1', // Ensure versioning is handled

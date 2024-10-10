@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Patch,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { ProductPricingService } from '../../application/product-pricing.service';
@@ -13,7 +14,9 @@ import { CreateProductPricingCommand } from '../../application/commands/create-p
 import { UpdateProductPricingCommand } from '../../application/commands/update-product-pricing.command';
 import { CreateProductPricingDto } from './dto/create-product-pricing.dto';
 import { UpdateProductPricingDto } from './dto/update-product-pricing.dto';
+import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
 
+@UseInterceptors(LoggingInterceptor)
 @Controller({
   path: 'product-pricing',
   version: '1',
