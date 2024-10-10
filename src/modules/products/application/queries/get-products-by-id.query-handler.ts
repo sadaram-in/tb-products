@@ -2,6 +2,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Product } from '../../domain/product';
 import { GetProductsByIdQuery } from './get-products-by-id.query';
 import { IProductRepository } from '../../domain/ports/products.repository';
+import { NotFoundException } from '@nestjs/common';
 
 @QueryHandler(GetProductsByIdQuery)
 export class GetProductsByIdQueryHandler
@@ -10,12 +11,15 @@ export class GetProductsByIdQueryHandler
   constructor(private readonly productRepository: IProductRepository) {}
 
   async execute(query: GetProductsByIdQuery): Promise<Product> {
-    // console.log('-------- Fetching product with ID ---------', query.id);
-    const product = await this.productRepository.findOne(query.id);
-
-    if (!product) {
-      throw new Error(`Product with ID ${query.id} not found`);
+    try {
+      const product = await this.productRepository.findOne(query.id);
+      console.log(product);
+      if (!product) {
+        return null;
+      }
+      return product;
+    } catch (error) {
+      return null;
     }
-    return product;
   }
 }

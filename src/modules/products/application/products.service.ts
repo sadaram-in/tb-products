@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GetProductsQuery } from './queries/get-products.query';
 import { GetProductsByIdQuery } from './queries/get-products-by-id.query';
@@ -7,13 +11,14 @@ import { UpdateProductCommand } from './commands/update-product.command';
 import { DeleteProductCommand } from './commands/delete-product.command';
 import { ResponseService } from 'src/shared/response/response.service';
 import { ApiResponseDto } from 'src/shared/response/dto/api-response.dto';
+import { responseCodesPR, statusCodes } from 'src/shared/constants/constants';
 
 @Injectable()
 export class ProductsService {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-    private readonly responseService: ResponseService, // Inject ResponseService
+    private readonly responseService: ResponseService,
   ) {}
 
   async create(
@@ -24,8 +29,8 @@ export class ProductsService {
       return this.responseService.buildResponse(
         'success',
         result,
-        201,
-        'PR-001',
+        statusCodes.CREATED,
+        responseCodesPR.SUCCESS,
       );
     } catch (error) {
       return this.responseService.buildErrorResponse(
@@ -33,8 +38,8 @@ export class ProductsService {
         {
           message: error.message,
         },
-        500,
-        'PR-003',
+        statusCodes.INTERNAL_SERVER_ERROR,
+        responseCodesPR.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -45,49 +50,64 @@ export class ProductsService {
       return this.responseService.buildResponse(
         'success',
         products,
-        200,
-        'PR-001',
+        statusCodes.SUCCESS,
+        responseCodesPR.SUCCESS,
       );
     } catch (error) {
-      return this.responseService.buildErrorResponse(
-        'error',
-        {
-          message: error.message,
-        },
-        500,
-        'PR-003',
+      throw new InternalServerErrorException(
+        this.responseService.buildErrorResponse(
+          'error',
+          {
+            message: error.message,
+          },
+          statusCodes.INTERNAL_SERVER_ERROR,
+          responseCodesPR.INTERNAL_SERVER_ERROR,
+        ),
       );
     }
   }
 
   async findOne(id: string): Promise<ApiResponseDto<any>> {
     try {
+      if (!id) {
+        new NotFoundException();
+        return this.responseService.handleNotFound(
+          'error',
+          {
+            message: 'Product ID is required',
+          },
+          statusCodes.NOT_FOUND,
+          responseCodesPR.NOT_FOUND,
+        );
+      }
       const product = await this.queryBus.execute(new GetProductsByIdQuery(id));
-      if (!product) {
+      if (product === null) {
         return this.responseService.handleNotFound(
           'error',
           {
             message: 'Product not found',
             id,
           },
-          404,
-          'PR-002',
+          statusCodes.NOT_FOUND,
+          responseCodesPR.NOT_FOUND,
         );
       }
       return this.responseService.buildResponse(
         'success',
         product,
-        200,
-        'PR-001',
+        statusCodes.SUCCESS,
+        responseCodesPR.SUCCESS,
       );
     } catch (error) {
-      return this.responseService.buildErrorResponse(
-        'error',
-        {
-          message: error.message,
-        },
-        500,
-        'PR-003',
+      throw new InternalServerErrorException(
+        this.responseService.buildErrorResponse(
+          'error',
+          {
+            message: error.message,
+          },
+          statusCodes.INTERNAL_SERVER_ERROR,
+          responseCodesPR.INTERNAL_SERVER_ERROR,
+        ),
       );
     }
   }
@@ -104,8 +124,8 @@ export class ProductsService {
           {
             message: `Product with ID ${id} not found`,
           },
-          404,
-          'PR-002',
+          statusCodes.NOT_FOUND,
+          responseCodesPR.NOT_FOUND,
         );
       }
       const updatedProduct =
@@ -113,17 +133,19 @@ export class ProductsService {
       return this.responseService.buildResponse(
         'success',
         updatedProduct,
-        200,
-        'PR-001',
+        statusCodes.CREATED,
+        responseCodesPR.SUCCESS,
       );
     } catch (error) {
-      return this.responseService.buildErrorResponse(
-        'error',
-        {
-          message: error.message,
-        },
-        500,
-        'PR-003',
+      throw new InternalServerErrorException(
+        this.responseService.buildErrorResponse(
+          'error',
+          {
+            message: error.message,
+          },
+          statusCodes.INTERNAL_SERVER_ERROR,
+          responseCodesPR.INTERNAL_SERVER_ERROR,
+        ),
       );
     }
   }
@@ -132,13 +154,15 @@ export class ProductsService {
     try {
       const product = await this.queryBus.execute(new GetProductsByIdQuery(id));
       if (!product) {
-        return this.responseService.handleNotFound(
-          'error',
-          {
-            message: `Product with ID ${id} not found`,
-          },
-          404,
-          'PR-002',
+        throw new NotFoundException(
+          this.responseService.handleNotFound(
+            'error',
+            {
+              message: `Product with ID ${id} not found`,
+            },
+            statusCodes.NOT_FOUND,
+            responseCodesPR.NOT_FOUND,
+          ),
         );
       }
       await this.commandBus.execute(new DeleteProductCommand(id));
@@ -147,17 +171,19 @@ export class ProductsService {
         {
           message: 'Product deleted successfully',
         },
-        200,
-        'PR-001',
+        statusCodes.SUCCESS,
+        responseCodesPR.SUCCESS,
       );
     } catch (error) {
-      return this.responseService.buildErrorResponse(
-        'error',
-        {
-          message: error.message,
-        },
-        500,
-        'PR-003',
+      throw new InternalServerErrorException(
+        this.responseService.buildErrorResponse(
+          'error',
+          {
+            message: error.message,
+          },
+          statusCodes.INTERNAL_SERVER_ERROR,
+          responseCodesPR.INTERNAL_SERVER_ERROR,
+        ),
       );
     }
   }

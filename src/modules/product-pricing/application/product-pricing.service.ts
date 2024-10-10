@@ -7,13 +7,15 @@ import { CreateProductPricingCommand } from './commands/create-product-pricing.c
 import { UpdateProductPricingCommand } from './commands/update-product-pricing.command';
 import { DeleteProductPricingCommand } from './commands/delete-product-pricing.command';
 import { ApiResponseDto } from 'src/shared/response/dto/api-response.dto'; // Adjust the path as needed
+import { statusCodes } from 'src/shared/constants/constants';
+import { responseCodesPRP } from 'src/shared/constants/constants';
 
 @Injectable()
 export class ProductPricingService {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
-    private readonly responseService: ResponseService, // Injecting ResponseService
+    private readonly responseService: ResponseService,
   ) {}
 
   async create(
@@ -24,17 +26,17 @@ export class ProductPricingService {
       return this.responseService.buildResponse(
         'success',
         result,
-        201,
-        'PRP-001',
-      ); // Return success response
+        statusCodes.CREATED,
+        responseCodesPRP.SUCCESS,
+      );
     } catch (error) {
       return this.responseService.handleInternalServerError(
         'error',
         {
           message: error.message,
         },
-        500,
-        'PRP-003',
+        statusCodes.INTERNAL_SERVER_ERROR,
+        responseCodesPRP.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -45,17 +47,17 @@ export class ProductPricingService {
       return this.responseService.buildResponse(
         'success',
         result,
-        200,
-        'PRP-001',
-      ); // Return success response
+        statusCodes.SUCCESS,
+        responseCodesPRP.SUCCESS,
+      );
     } catch (error) {
       return this.responseService.handleInternalServerError(
         'error',
         {
           message: error.message,
         },
-        500,
-        'PRP-003',
+        statusCodes.INTERNAL_SERVER_ERROR,
+        responseCodesPRP.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -72,15 +74,15 @@ export class ProductPricingService {
             message: 'Product pricing not found',
             id,
           },
-          404,
-          'PRP-002',
+          statusCodes.NOT_FOUND,
+          responseCodesPRP.NOT_FOUND,
         );
       }
       return this.responseService.buildResponse(
         'success',
         result,
-        200,
-        'PRP-001',
+        statusCodes.SUCCESS,
+        responseCodesPRP.SUCCESS,
       ); // Return success response
     } catch (error) {
       return this.responseService.handleInternalServerError(
@@ -88,8 +90,8 @@ export class ProductPricingService {
         {
           message: error.message,
         },
-        500,
-        'PRP-003',
+        statusCodes.INTERNAL_SERVER_ERROR,
+        responseCodesPRP.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -108,8 +110,8 @@ export class ProductPricingService {
           {
             message: `Pricing with ID ${id} not found`,
           },
-          404,
-          'PRP-002',
+          statusCodes.NOT_FOUND,
+          responseCodesPRP.NOT_FOUND,
         );
       }
 
@@ -117,17 +119,17 @@ export class ProductPricingService {
       return this.responseService.buildResponse(
         'success',
         result,
-        200,
-        'PRP-001',
-      ); // Return success response
+        statusCodes.SUCCESS,
+        responseCodesPRP.SUCCESS,
+      );
     } catch (error) {
       return this.responseService.handleInternalServerError(
         'error',
         {
           message: error.message,
         },
-        500,
-        'PRP-003',
+        statusCodes.INTERNAL_SERVER_ERROR,
+        responseCodesPRP.INTERNAL_SERVER_ERROR,
       );
     }
   }
@@ -143,8 +145,8 @@ export class ProductPricingService {
           {
             message: `Pricing with ID ${id} not found`,
           },
-          404,
-          'PRP-002',
+          statusCodes.NOT_FOUND,
+          responseCodesPRP.NOT_FOUND,
         );
       }
 
@@ -154,17 +156,17 @@ export class ProductPricingService {
         {
           message: `Pricing with ID ${id} deleted successfully`,
         },
-        200,
-        'PRP-001',
-      ); // Return success response
+        statusCodes.SUCCESS,
+        responseCodesPRP.SUCCESS,
+      );
     } catch (error) {
       return this.responseService.handleInternalServerError(
         'error',
         {
           message: error.message,
         },
-        500,
-        'PRP-003',
+        statusCodes.INTERNAL_SERVER_ERROR,
+        responseCodesPRP.INTERNAL_SERVER_ERROR,
       );
     }
   }
