@@ -9,3 +9,4 @@ export class CreateProductPricingDto {
   effective_from: Date;
   effective_to: Date | null;
 }
+

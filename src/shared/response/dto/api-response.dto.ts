@@ -1,6 +1,6 @@
-
 export class ApiResponseDto<T> {
-  status: String
+  status: String;
   payload: T;
-  statusCode: number;
+  status_code: number;
+  response_code: any;
 }

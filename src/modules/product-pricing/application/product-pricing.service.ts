@@ -21,22 +21,42 @@ export class ProductPricingService {
   ): Promise<ApiResponseDto<any>> {
     try {
       const result = await this.commandBus.execute(createProductPricingCommand);
-      return this.responseService.buildResponse('success', result); // Return success response
+      return this.responseService.buildResponse(
+        'success',
+        result,
+        201,
+        'PRP-001',
+      ); // Return success response
     } catch (error) {
-      return this.responseService.handleInternalServerError('error', {
-        message: error.message,
-      });
+      return this.responseService.handleInternalServerError(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PRP-003',
+      );
     }
   }
 
   async findAll(): Promise<ApiResponseDto<any>> {
     try {
       const result = await this.queryBus.execute(new GetProductPricingQuery());
-      return this.responseService.buildResponse('success', result); // Return success response
+      return this.responseService.buildResponse(
+        'success',
+        result,
+        200,
+        'PRP-001',
+      ); // Return success response
     } catch (error) {
-      return this.responseService.handleInternalServerError('error', {
-        message: error.message,
-      });
+      return this.responseService.handleInternalServerError(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PRP-003',
+      );
     }
   }
 
@@ -46,16 +66,31 @@ export class ProductPricingService {
         new GetProductPricingByIdQuery(id),
       );
       if (!result) {
-        return this.responseService.handleNotFound('error', {
-          message: 'Product pricing not found',
-          id,
-        });
+        return this.responseService.handleNotFound(
+          'error',
+          {
+            message: 'Product pricing not found',
+            id,
+          },
+          404,
+          'PRP-002',
+        );
       }
-      return this.responseService.buildResponse('success', result); // Return success response
+      return this.responseService.buildResponse(
+        'success',
+        result,
+        200,
+        'PRP-001',
+      ); // Return success response
     } catch (error) {
-      return this.responseService.handleInternalServerError('error', {
-        message: error.message,
-      });
+      return this.responseService.handleInternalServerError(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PRP-003',
+      );
     }
   }
 
@@ -68,17 +103,32 @@ export class ProductPricingService {
         new GetProductPricingByIdQuery(id),
       );
       if (!pricing) {
-        return this.responseService.handleNotFound('error', {
-          message: `Pricing with ID ${id} not found`,
-        });
+        return this.responseService.handleNotFound(
+          'error',
+          {
+            message: `Pricing with ID ${id} not found`,
+          },
+          404,
+          'PRP-002',
+        );
       }
 
       const result = await this.commandBus.execute(updateProductPricingCommand);
-      return this.responseService.buildResponse('success', result); // Return success response
+      return this.responseService.buildResponse(
+        'success',
+        result,
+        200,
+        'PRP-001',
+      ); // Return success response
     } catch (error) {
-      return this.responseService.handleInternalServerError('error', {
-        message: error.message,
-      });
+      return this.responseService.handleInternalServerError(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PRP-003',
+      );
     }
   }
 
@@ -88,19 +138,34 @@ export class ProductPricingService {
         new GetProductPricingByIdQuery(id),
       );
       if (!pricing) {
-        return this.responseService.handleNotFound('error', {
-          message: `Pricing with ID ${id} not found`,
-        });
+        return this.responseService.handleNotFound(
+          'error',
+          {
+            message: `Pricing with ID ${id} not found`,
+          },
+          404,
+          'PRP-002',
+        );
       }
 
       await this.commandBus.execute(new DeleteProductPricingCommand(id));
-      return this.responseService.buildResponse('success', {
-        message: `Pricing with ID ${id} deleted successfully`,
-      }); // Return success response
+      return this.responseService.buildResponse(
+        'success',
+        {
+          message: `Pricing with ID ${id} deleted successfully`,
+        },
+        200,
+        'PRP-001',
+      ); // Return success response
     } catch (error) {
-      return this.responseService.handleInternalServerError('error', {
-        message: error.message,
-      });
+      return this.responseService.handleInternalServerError(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PRP-003',
+      );
     }
   }
 }

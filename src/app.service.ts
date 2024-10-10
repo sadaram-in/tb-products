@@ -7,8 +7,11 @@ export class AppService {
   constructor(private readonly responseService: ResponseService) {} // Inject ResponseService
 
   getHello(): ApiResponseDto<any> {
-    return this.responseService.buildResponse('sucess', {
-      message: 'sample Route is working',
-    });
+    return this.responseService.buildResponse(
+      'Success',
+      { message: 'Products API' },
+      200,
+      'APP-001',
+    );
   }
 }

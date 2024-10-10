@@ -21,22 +21,42 @@ export class ProductsService {
   ): Promise<ApiResponseDto<any>> {
     try {
       const result = await this.commandBus.execute(createProductCommand);
-      return this.responseService.buildResponse('success', result);
+      return this.responseService.buildResponse(
+        'success',
+        result,
+        201,
+        'PR-001',
+      );
     } catch (error) {
-      return this.responseService.buildErrorResponse('error', {
-        message: error.message,
-      });
+      return this.responseService.buildErrorResponse(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PR-003',
+      );
     }
   }
 
   async findAll(): Promise<ApiResponseDto<any>> {
     try {
       const products = await this.queryBus.execute(new GetProductsQuery());
-      return this.responseService.buildResponse('success', products);
+      return this.responseService.buildResponse(
+        'success',
+        products,
+        200,
+        'PR-001',
+      );
     } catch (error) {
-      return this.responseService.buildErrorResponse('error', {
-        message: error.message,
-      });
+      return this.responseService.buildErrorResponse(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PR-003',
+      );
     }
   }
 
@@ -44,16 +64,31 @@ export class ProductsService {
     try {
       const product = await this.queryBus.execute(new GetProductsByIdQuery(id));
       if (!product) {
-        return this.responseService.handleNotFound('error', {
-          message: 'Product not found',
-          id,
-        });
+        return this.responseService.handleNotFound(
+          'error',
+          {
+            message: 'Product not found',
+            id,
+          },
+          404,
+          'PR-002',
+        );
       }
-      return this.responseService.buildResponse('success', product);
+      return this.responseService.buildResponse(
+        'success',
+        product,
+        200,
+        'PR-001',
+      );
     } catch (error) {
-      return this.responseService.buildErrorResponse('error', {
-        message: error.message,
-      });
+      return this.responseService.buildErrorResponse(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PR-003',
+      );
     }
   }
 
@@ -64,17 +99,32 @@ export class ProductsService {
     try {
       const product = await this.queryBus.execute(new GetProductsByIdQuery(id));
       if (!product) {
-        return this.responseService.handleNotFound('error', {
-          message: `Product with ID ${id} not found`,
-        });
+        return this.responseService.handleNotFound(
+          'error',
+          {
+            message: `Product with ID ${id} not found`,
+          },
+          404,
+          'PR-002',
+        );
       }
       const updatedProduct =
         await this.commandBus.execute(updateProductCommand);
-      return this.responseService.buildResponse('success', updatedProduct);
+      return this.responseService.buildResponse(
+        'success',
+        updatedProduct,
+        200,
+        'PR-001',
+      );
     } catch (error) {
-      return this.responseService.buildErrorResponse('error', {
-        message: error.message,
-      });
+      return this.responseService.buildErrorResponse(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PR-003',
+      );
     }
   }
 
@@ -82,18 +132,33 @@ export class ProductsService {
     try {
       const product = await this.queryBus.execute(new GetProductsByIdQuery(id));
       if (!product) {
-        return this.responseService.handleNotFound('error', {
-          message: `Product with ID ${id} not found`,
-        });
+        return this.responseService.handleNotFound(
+          'error',
+          {
+            message: `Product with ID ${id} not found`,
+          },
+          404,
+          'PR-002',
+        );
       }
       await this.commandBus.execute(new DeleteProductCommand(id));
-      return this.responseService.buildResponse('success', {
-        message: 'Product deleted successfully',
-      });
+      return this.responseService.buildResponse(
+        'success',
+        {
+          message: 'Product deleted successfully',
+        },
+        200,
+        'PR-001',
+      );
     } catch (error) {
-      return this.responseService.buildErrorResponse('error', {
-        message: error.message,
-      });
+      return this.responseService.buildErrorResponse(
+        'error',
+        {
+          message: error.message,
+        },
+        500,
+        'PR-003',
+      );
     }
   }
 }
