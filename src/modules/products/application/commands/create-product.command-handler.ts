@@ -24,7 +24,7 @@ export class CreateProductCommandHandler
     const product = this.productFactory.create({
       name: command.name,
       description: command.description,
-      changeLog: command.changeLog,
+      change_log: command.change_log,
       effective_from: command.effective_from,
       effective_to: command.effective_to,
       is_active: command.is_active,

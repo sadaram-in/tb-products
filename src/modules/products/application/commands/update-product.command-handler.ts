@@ -14,7 +14,7 @@ export class UpdateProductCommandHandler
       id,
       name,
       description,
-      changeLog,
+      change_log,
       effective_from,
       effective_to,
       is_active,
@@ -29,7 +29,7 @@ export class UpdateProductCommandHandler
     // Update the product properties
     productToUpdate.name = name;
     productToUpdate.description = description;
-    productToUpdate.changeLog = changeLog;
+    productToUpdate.change_log = change_log;
     productToUpdate.effective_from = effective_from;
     productToUpdate.effective_to = effective_to;
     productToUpdate.is_active = is_active;

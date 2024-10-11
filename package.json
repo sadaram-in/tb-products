@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "pnpm start:app && pnpm start:doc",
+    "start": "pnpm start:doc && pnpm start:app ",
     "start:app": "nest start",
     "start:dev": "nest start --watch | pino-pretty",
     "start:debug": "nest start --debug --watch",

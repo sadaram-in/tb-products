@@ -133,7 +133,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#changeLog" >changeLog</a>
+                                <a href="#change_log" >change_log</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -189,11 +189,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="changeLog"></a>
+                    <a name="change_log"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                        <span ><b>changeLog</b></span>
-                        <a href="#changeLog"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>change_log</b></span>
+                        <a href="#change_log"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -515,42 +515,43 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-    UpdateDateColumn,
-  } from &#x27;typeorm&#x27;;
-  
-  @Entity(&#x27;products&#x27;)
-  export class ProductEntity {
-    @PrimaryGeneratedColumn(&#x27;uuid&#x27;)
-    id: string;
-  
-    @Column({ type: &#x27;varchar&#x27;, length: 255 })
-    name: string;
-  
-    @Column({ type: &#x27;text&#x27;, nullable: true })
-    description: string;
-  
-    @Column({ type: &#x27;jsonb&#x27;, nullable: true })
-    changeLog: Record&lt;string, any&gt;;
-  
-    @Column({ type: &#x27;boolean&#x27;, default: true })
-    is_active: boolean;
-  
-    @Column({ type: &#x27;date&#x27;, nullable: false })
-    effective_from: Date;
-  
-    @Column({ type: &#x27;date&#x27;, nullable: true })
-    effective_to: Date;
-  
-    @CreateDateColumn({ type: &#x27;timestamp&#x27; })
-    created_at: Date;
-  
-    @UpdateDateColumn({ type: &#x27;timestamp&#x27; })
-    updated_at: Date;
-  }</code></pre>
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from &#x27;typeorm&#x27;;
+
+@Entity(&#x27;products&#x27;)
+export class ProductEntity {
+  @PrimaryGeneratedColumn(&#x27;uuid&#x27;)
+  id: string;
+
+  @Column({ type: &#x27;varchar&#x27;, length: 255 })
+  name: string;
+
+  @Column({ type: &#x27;text&#x27;, nullable: true })
+  description: string;
+
+  @Column({ type: &#x27;jsonb&#x27;, nullable: true })
+  change_log: Record&lt;string, any&gt;;
+
+  @Column({ type: &#x27;boolean&#x27;, default: true })
+  is_active: boolean;
+
+  @Column({ type: &#x27;date&#x27;, nullable: false })
+  effective_from: Date;
+
+  @Column({ type: &#x27;date&#x27;, nullable: true })
+  effective_to: Date;
+
+  @CreateDateColumn({ type: &#x27;timestamp&#x27; })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: &#x27;timestamp&#x27; })
+  updated_at: Date;
+}
+</code></pre>
     </div>
 </div>
 

@@ -244,12 +244,19 @@ import { CreateProductDto } from &#x27;../../presentation/http/dto/create-produc
 
 export class ProductFactory {
   create(createProductDto: CreateProductDto): ProductEntity {
-    const { name, description, changeLog, effective_from, effective_to, is_active } &#x3D; createProductDto;
+    const {
+      name,
+      description,
+      change_log,
+      effective_from,
+      effective_to,
+      is_active,
+    } &#x3D; createProductDto;
 
     const product &#x3D; new ProductEntity();
     product.name &#x3D; name;
     product.description &#x3D; description;
-    product.changeLog &#x3D; changeLog;
+    product.change_log &#x3D; change_log;
     product.effective_from &#x3D; effective_from;
     product.effective_to &#x3D; effective_to;
     product.is_active &#x3D; is_active;

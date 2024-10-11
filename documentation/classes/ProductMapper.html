@@ -258,8 +258,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="18"
-                                    class="link-to-prism">src/modules/products/infrastructure/persistance/orm/mappers/product.mapper.ts:18</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="17"
+                                    class="link-to-prism">src/modules/products/infrastructure/persistance/orm/mappers/product.mapper.ts:17</a></div>
                         </td>
                     </tr>
 
@@ -318,32 +318,32 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Product } from &#x27;../../../../domain/product&#x27;;
 import { ProductEntity } from &#x27;../entities/product.entities&#x27;;
 export class ProductMapper {
-    static toDomain(productEntity: ProductEntity): Product {
-    
-      const productModel &#x3D; new Product(
-        productEntity.id,
-        productEntity.name,
-        productEntity.description,
-        productEntity.changeLog,
-        productEntity.effective_from,
-        productEntity.effective_to,
-        productEntity.is_active,
-      );
-      return productModel;
-    }
-  
-    static toPersistence(product: Product) {
-      const entity &#x3D; new ProductEntity();
-      entity.id &#x3D; product.id;
-      entity.name &#x3D; product.name;
-      entity.description &#x3D; product.description;
-      entity.changeLog &#x3D; product.changeLog;
-      entity.effective_from &#x3D; product.effective_from;
-      entity.effective_to &#x3D; product.effective_to;
-      entity.is_active &#x3D; product.is_active;
-      return entity;
-    }
-  }</code></pre>
+  static toDomain(productEntity: ProductEntity): Product {
+    const productModel &#x3D; new Product(
+      productEntity.id,
+      productEntity.name,
+      productEntity.description,
+      productEntity.change_log,
+      productEntity.effective_from,
+      productEntity.effective_to,
+      productEntity.is_active,
+    );
+    return productModel;
+  }
+
+  static toPersistence(product: Product) {
+    const entity &#x3D; new ProductEntity();
+    entity.id &#x3D; product.id;
+    entity.name &#x3D; product.name;
+    entity.description &#x3D; product.description;
+    entity.change_log &#x3D; product.change_log;
+    entity.effective_from &#x3D; product.effective_from;
+    entity.effective_to &#x3D; product.effective_to;
+    entity.is_active &#x3D; product.is_active;
+    return entity;
+  }
+}
+</code></pre>
     </div>
 </div>
 
