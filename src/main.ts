@@ -1,19 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  app.useGlobalPipes(new ValidationPipe());
   app.useLogger(app.get(Logger));
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: configService.get('API_VERSION'),
     prefix: 'v',
   });
- 
+
   const config = new DocumentBuilder()
     .setTitle(configService.get('APP_NAME'))
     .setDescription('Product API')
