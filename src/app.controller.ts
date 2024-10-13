@@ -13,7 +13,6 @@ export class AppController {
 
   @Post()
   postHello(@Body() createDummyDto: CreateDummyDto) {
-    console.log('Endpoint hit, returning hi');
-    return 'hi';
+    return this.appService.postHello(createDummyDto);
   }
 }

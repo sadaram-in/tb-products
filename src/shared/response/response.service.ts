@@ -1,65 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiResponseDto } from './dto/api-response.dto';
+
+export class CustomException extends HttpException {
+  constructor(response: ApiResponseDto<any>, statusCode: HttpStatus) {
+    super(response, statusCode);
+  }
+}
 
 @Injectable()
 export class ResponseService {
-  // Method to build a 200 standard response
-  buildResponse<T>(
-    status: string,
-    payload: T,
-    status_code: number = 200,
-    response_code: string,
-  ): ApiResponseDto<T> {
-    const response = new ApiResponseDto<T>();
-    response.status = status;
-    response.payload = payload;
-    response.status_code = status_code;
-    response.response_code = response_code;
-    return response;
-  }
 
-  // Method to build an 400 error response
   buildErrorResponse<T>(
     status: string,
     payload: T,
-    status_code: number = 400,
-    response_code: string,
+    statusCode: number = HttpStatus.BAD_REQUEST,
+    responseCode: string,
   ): ApiResponseDto<T> {
     const response = new ApiResponseDto<T>();
     response.status = status;
     response.payload = payload;
-    response.status_code = status_code;
-    response.response_code = response_code;
-    return response;
+    response.status_code = statusCode;
+    response.response_code = responseCode;
+    throw new CustomException(response, statusCode);
   }
 
-  // 404 Not Found responses
   handleNotFound<T>(
     status: string,
     payload: T,
-    status_code: number = 404,
-    response_code: string,
+    statusCode: number = HttpStatus.NOT_FOUND,
+    responseCode: string,
   ): ApiResponseDto<T> {
     const response = new ApiResponseDto<T>();
     response.status = status;
     response.payload = payload;
-    response.status_code = status_code;
-    response.response_code = response_code;
-    return response;
+    response.status_code = statusCode;
+    response.response_code = responseCode;
+    throw new CustomException(response, statusCode);
   }
 
-  // 500 Internal Server Error responses
   handleInternalServerError<T>(
     status: string,
     payload: T,
-    status_code: number = 500,
-    response_code: string,
+    statusCode: number = HttpStatus.INTERNAL_SERVER_ERROR,
+    responseCode: string,
   ): ApiResponseDto<T> {
     const response = new ApiResponseDto<T>();
     response.status = status;
     response.payload = payload;
-    response.status_code = status_code;
-    response.response_code = response_code;
-    return response;
+    response.status_code = statusCode;
+    response.response_code = responseCode;
+    throw new CustomException(response, statusCode);
   }
 }

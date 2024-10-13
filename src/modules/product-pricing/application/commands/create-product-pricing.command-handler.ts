@@ -24,6 +24,7 @@ export class CreateProductPricingCommandHandler
     if (!command.product_id) {
       return { message: 'Product ID is required.' };
     }
+
     const productPricing = this.productPricingFactory.create({
       product_id: command.product_id,
       price: command.price,
