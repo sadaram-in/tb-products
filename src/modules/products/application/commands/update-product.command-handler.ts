@@ -18,6 +18,7 @@ export class UpdateProductCommandHandler
       effective_from,
       effective_to,
       is_active,
+      golden_id,
     } = command;
 
     // Logic to update the product using the repository
@@ -27,6 +28,7 @@ export class UpdateProductCommandHandler
     }
     // console.log(is_active);
     // Update the product properties
+    productToUpdate.golden_id = golden_id;
     productToUpdate.name = name;
     productToUpdate.description = description;
     productToUpdate.change_log = change_log;

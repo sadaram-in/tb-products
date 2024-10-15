@@ -1,17 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsAlphanumeric,
   IsArray,
-  isArray,
   IsBoolean,
-  IsDate,
   IsDateString,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
 } from 'class-validator';
 
+
 export class CreateProductDto {
+  @ApiProperty()
+  @IsUUID()
+  golden_id: string;
+
   @ApiProperty()
   @IsString()
   @Length(1, 30)

@@ -4,6 +4,7 @@ export class ProductMapper {
   static toDomain(productEntity: ProductEntity): Product {
     const productModel = new Product(
       productEntity.id,
+      productEntity.golden_id,
       productEntity.name,
       productEntity.description,
       productEntity.change_log,
@@ -17,6 +18,7 @@ export class ProductMapper {
   static toPersistence(product: Product) {
     const entity = new ProductEntity();
     entity.id = product.id;
+    entity.golden_id = product.golden_id;
     entity.name = product.name;
     entity.description = product.description;
     entity.change_log = product.change_log;

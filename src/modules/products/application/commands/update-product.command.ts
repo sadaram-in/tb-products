@@ -3,6 +3,7 @@
 export class UpdateProductCommand {
   constructor(
     public readonly id: string,
+    public readonly golden_id: string,
     public readonly name: string,
     public readonly description: string,
     public readonly change_log: Record<string, any>,

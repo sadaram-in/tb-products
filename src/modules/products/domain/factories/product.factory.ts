@@ -5,6 +5,7 @@ export class ProductFactory {
   create(createProductDto: CreateProductDto): ProductEntity {
     const {
       name,
+      golden_id,
       description,
       change_log,
       effective_from,
@@ -13,6 +14,7 @@ export class ProductFactory {
     } = createProductDto;
 
     const product = new ProductEntity();
+    product.golden_id = golden_id;
     product.name = name;
     product.description = description;
     product.change_log = change_log;

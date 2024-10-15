@@ -85,6 +85,7 @@ describe('ProductController', () => {
     it('should create a new product', async () => {
       const newProduct: CreateProductDto = {
         name: 'New Product',
+        golden_id: '123e4567-e89b-12d3-a456-426614174000',
         description: 'New Product Description',
         change_log: [],
         effective_from: new Date(),

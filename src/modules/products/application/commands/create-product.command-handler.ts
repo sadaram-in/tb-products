@@ -22,6 +22,7 @@ export class CreateProductCommandHandler
 
     // Use the factory to create a product entity from the command data
     const product = this.productFactory.create({
+      golden_id: command.golden_id,
       name: command.name,
       description: command.description,
       change_log: command.change_log,

@@ -11,6 +11,10 @@ export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  // @ForeignKey(() => GoldenRecordEntity)
+  @Column({ type: 'uuid', nullable: false })
+  golden_id: string;
+
   @Column({ type: 'varchar', length: 255 })
   name: string;
 

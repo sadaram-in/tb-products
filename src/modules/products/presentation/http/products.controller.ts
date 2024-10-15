@@ -37,6 +37,7 @@ export class ProductsController {
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(
       new CreateProductCommand(
+        createProductDto.golden_id,
         createProductDto.name,
         createProductDto.description,
         createProductDto.change_log,
@@ -54,6 +55,7 @@ export class ProductsController {
   ) {
     const updateProductCommand = new UpdateProductCommand(
       id,
+      updateProductDto.golden_id,
       updateProductDto.name,
       updateProductDto.description,
       updateProductDto.change_log,
