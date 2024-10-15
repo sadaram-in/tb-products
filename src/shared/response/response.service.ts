@@ -1,6 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiResponseDto } from './dto/api-response.dto';
 import { createLogger } from '../loggers/pino.logger';
+
 export class CustomException extends HttpException {
   constructor(response: ApiResponseDto<any>, statusCode: HttpStatus) {
     super(response, statusCode);

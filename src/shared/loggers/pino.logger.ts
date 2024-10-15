@@ -1,4 +1,10 @@
 import pino from 'pino';
+// windspan
+// 1. try netlabs logger
+
+// pnpm add @Netlabs-Australia-Pty-Ltd/napl-ts-logger
+
+// npm install @Netlabs-Australia-Pty-Ltd/napl-ts-logger
 
 const transport = pino.transport({
   target: 'pino/file',
@@ -35,7 +41,6 @@ export const createLogger = (context: string) => {
     debug: (message: string, obj?: object) => {
       logger.debug({ context, msg: message, ...obj });
     },
-    
   };
 };
 

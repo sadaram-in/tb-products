@@ -12,7 +12,7 @@ describe('AppController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService,ResponseService],
+      providers: [AppService, ResponseService],
     }).compile();
 
     appController = app.get<AppController>(AppController);
@@ -25,7 +25,7 @@ describe('AppController', () => {
         payload: { data: 'Hello World!' },
         status: 'success',
         status_code: 200,
-        response_code: 200
+        response_code: 200,
       };
       jest.spyOn(appService, 'getHello').mockImplementation(() => result);
 
@@ -34,15 +34,20 @@ describe('AppController', () => {
   });
 
   describe('postHello', () => {
-    it('should return "hi"', () => {
+    it('should return the result from appService.postHello()', () => {
       const createDummyDto: CreateDummyDto = {
-        email: '',
-        password: '',
-      }; // Add properties as needed
-      const consoleSpy = jest.spyOn(console, 'log');
+        email: 'test@example.com',
+        password: 'password123',
+      };
+      const result: ApiResponseDto<any> = {
+        payload: { data: 'Hello World!' },
+        status: 'success',
+        status_code: 200,
+        response_code: 200,
+      };
+      jest.spyOn(appService, 'postHello').mockImplementation(() => result);
 
-      expect(appController.postHello(createDummyDto)).toBe('hi');
-      expect(consoleSpy).toHaveBeenCalledWith('Endpoint hit, returning hi');
+      expect(appController.postHello(createDummyDto)).toEqual(result);
     });
   });
 });
