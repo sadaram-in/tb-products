@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  ValidateIf,
 } from 'class-validator';
 
 export class CreateProductPricingDto {
@@ -33,4 +34,15 @@ export class CreateProductPricingDto {
   @IsOptional()
   @IsDateString()
   effective_to: Date | null;
+
+  @ApiProperty({ nullable: true })
+  @IsOptional()
+  @IsDateString()
+  @ValidateIf((o) => o.eol_date >= o.effective_to)
+  eol_date: Date | null;
+
+  @ApiProperty({ nullable: true })
+  @IsOptional()
+  @IsString()
+  term: string | null;
 }

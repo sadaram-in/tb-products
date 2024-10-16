@@ -46,6 +46,8 @@ export class ProductPricingController {
         createProductPricingDto.is_active,
         createProductPricingDto.effective_from,
         createProductPricingDto.effective_to || null,
+        createProductPricingDto.eol_date || null,
+        createProductPricingDto.term || null,
       ),
     );
   }
@@ -62,6 +64,8 @@ export class ProductPricingController {
       updateProductPricingDto.is_active,
       updateProductPricingDto.effective_from,
       updateProductPricingDto.effective_to || null,
+      updateProductPricingDto.eol_date || null,
+      updateProductPricingDto.term || null,
     );
     return this.productPricingService.update(id, updateProductPricingCommand);
   }

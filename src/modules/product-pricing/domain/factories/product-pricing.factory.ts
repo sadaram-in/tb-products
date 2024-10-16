@@ -3,7 +3,7 @@ import { CreateProductPricingDto } from "../../presentation/http/dto/create-prod
 
 export class ProductPricingFactory {
   create(createProductPricingDto: CreateProductPricingDto): ProductPricingEntity {
-    const { product_id, price, currency, is_active, effective_from, effective_to } = createProductPricingDto;
+    const { product_id, price, currency, is_active, effective_from, effective_to, eol_date, term } = createProductPricingDto;
 
     const productPricing = new ProductPricingEntity();
     productPricing.product_id = product_id;
@@ -12,6 +12,8 @@ export class ProductPricingFactory {
     productPricing.is_active = is_active;
     productPricing.effective_from = effective_from;
     productPricing.effective_to = effective_to;
+    productPricing.eol_date = eol_date;
+    productPricing.term = term;
 
     return productPricing;
   }

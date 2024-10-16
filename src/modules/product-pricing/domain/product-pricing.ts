@@ -7,5 +7,7 @@ export class ProductPricing {
     public is_active: boolean,
     public effective_from: Date,
     public effective_to: Date | null,
+    public eol_date: Date | null,
+    public term: string | null,
   ) {}
 }

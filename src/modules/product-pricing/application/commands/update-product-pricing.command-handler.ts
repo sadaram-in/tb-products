@@ -12,7 +12,7 @@ export class UpdateProductPricingCommandHandler
   ) {}
 
   async execute(command: UpdateProductPricingCommand): Promise<ProductPricing> {
-    const { id, price, currency, effective_from, effective_to, is_active } =
+    const { id, price, currency, effective_from, effective_to, is_active, eol_date, term } =
       command;
 
     // Logic to update the product using the repository
@@ -27,6 +27,8 @@ export class UpdateProductPricingCommandHandler
     productToUpdate.effective_from = effective_from;
     productToUpdate.effective_to = effective_to;
     productToUpdate.is_active = is_active;
+    productToUpdate.eol_date = eol_date;
+    productToUpdate.term = term;
     // console.log(productToUpdate);
     // Save the updated product
     return await this.productPricingRepository.save(productToUpdate);

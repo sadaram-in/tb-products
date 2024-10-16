@@ -12,6 +12,8 @@ export class ProductPricingMapper {
       entity.is_active,
       entity.effective_from,
       entity.effective_to,
+      entity.eol_date,
+      entity.term,
     );
   }
 
@@ -25,6 +27,8 @@ export class ProductPricingMapper {
     entity.is_active = domain.is_active;
     entity.effective_from = domain.effective_from;
     entity.effective_to = domain.effective_to || null;
+    entity.eol_date = domain.eol_date || null;
+    entity.term = domain.term || null;
     return entity;
   }
 }

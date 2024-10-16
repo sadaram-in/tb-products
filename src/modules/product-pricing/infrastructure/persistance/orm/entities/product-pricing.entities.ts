@@ -35,6 +35,12 @@ export class ProductPricingEntity {
   @Column({ type: 'date', nullable: true })
   effective_to: Date;
 
+  @Column({ type: 'date', nullable: true })
+  eol_date: Date;
+
+  @Column({ type: 'enum', enum: ['monthly', 'yearly'], nullable: true })
+  term: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 

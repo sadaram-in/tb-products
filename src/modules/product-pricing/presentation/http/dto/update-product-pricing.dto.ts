@@ -8,6 +8,7 @@ import {
   IsOptional,
   IsString,
   Min,
+  ValidateIf,
 } from 'class-validator';
 
 export class UpdateProductPricingDto extends PartialType(
@@ -38,4 +39,15 @@ export class UpdateProductPricingDto extends PartialType(
   @IsOptional()
   @IsDateString()
   effective_to?: Date | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  @IsOptional()
+  @IsDateString()
+  @ValidateIf((o) => o.eol_date >= o.effective_to)
+  eol_date?: Date | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  @IsOptional()
+  @IsString()
+  term?: string | null;
 }

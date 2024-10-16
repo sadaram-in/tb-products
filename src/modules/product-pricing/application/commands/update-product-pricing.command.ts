@@ -6,5 +6,7 @@ export class UpdateProductPricingCommand {
     public readonly is_active?: boolean,
     public readonly effective_from?: Date,
     public readonly effective_to?: Date,
+    public readonly eol_date?: Date,
+    public readonly term?: string,
   ) {}
 }

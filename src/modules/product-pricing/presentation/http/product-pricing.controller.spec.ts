@@ -79,6 +79,8 @@ describe('ProductPricingController', () => {
         is_active: true,
         effective_from: new Date(),
         effective_to: null,
+        eol_date: null,
+        term: null,
       };
       const result: ApiResponseDto<any> = {
         status: 'success',
@@ -104,6 +106,8 @@ describe('ProductPricingController', () => {
         is_active: false,
         effective_from: new Date(),
         effective_to: null,
+        eol_date: null,
+        term: null,
       };
       const result: ApiResponseDto<any> = {
         status: 'success',

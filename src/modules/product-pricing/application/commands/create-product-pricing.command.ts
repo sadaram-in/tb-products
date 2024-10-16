@@ -6,5 +6,7 @@ export class CreateProductPricingCommand {
     public readonly is_active: boolean,
     public readonly effective_from: Date,
     public readonly effective_to: Date | null,
+    public readonly eol_date: Date | null,
+    public readonly term: string | null,
   ) {}
 }

@@ -31,6 +31,8 @@ export class CreateProductPricingCommandHandler
       is_active: command.is_active,
       effective_from: command.effective_from,
       effective_to: command.effective_to,
+      eol_date: command.eol_date,
+      term: command.term,
     });
 
     return this.productPricingRepository.save(productPricing);
