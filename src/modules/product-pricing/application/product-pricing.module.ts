@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-
 import { ProductPricingController } from '../presentation/http/product-pricing.controller';
 import { ProductPricingRepository } from '../infrastructure/persistance/orm/repositories/product-pricing.repository';
 import { ProductPricingEntity } from '../infrastructure/persistance/orm/entities/product-pricing.entities';
@@ -20,11 +19,17 @@ import { ProductPricingFactory } from '../domain/factories/product-pricing.facto
 import { ProductPricingService } from './product-pricing.service';
 import { IProductPricingRepository } from '../domain/ports/product-pricing.repository';
 import { ResponseService } from 'src/shared/response/response.service';
+import { ScheduleModule } from '@nestjs/schedule';
+import { UpdateIsActiveCron } from '../../../shared/cron/update-is-active.cron';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProductPricingEntity])],
+  imports: [
+    TypeOrmModule.forFeature([ProductPricingEntity]),
+    ScheduleModule.forRoot(),
+  ],
   controllers: [ProductPricingController],
   providers: [
+    UpdateIsActiveCron,
     ProductPricingService,
     ResponseService,
     ProductPricingFactory,

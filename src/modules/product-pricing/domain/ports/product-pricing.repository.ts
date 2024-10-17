@@ -5,4 +5,5 @@ export abstract class IProductPricingRepository {
   abstract findOne(id: string): Promise<ProductPricing>;
   abstract save(productPricing: ProductPricing): Promise<ProductPricing>;
   abstract delete(id: string): Promise<void>;
+  abstract updateIsActive(currentDate: Date): Promise<void>;
 }
