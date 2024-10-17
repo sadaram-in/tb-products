@@ -2,6 +2,8 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UpdateProductPricingCommand } from './update-product-pricing.command';
 import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
 import { ProductPricing } from '../../domain/product-pricing';
+import { randomUUID } from 'crypto';
+import { ProductPricingFactory } from '../../domain/factories/product-pricing.factory';
 
 @CommandHandler(UpdateProductPricingCommand)
 export class UpdateProductPricingCommandHandler
@@ -9,28 +11,44 @@ export class UpdateProductPricingCommandHandler
 {
   constructor(
     private readonly productPricingRepository: IProductPricingRepository,
+    private readonly productPricingFactory: ProductPricingFactory,
   ) {}
 
   async execute(command: UpdateProductPricingCommand): Promise<ProductPricing> {
-    const { id, price, currency, effective_from, effective_to, is_active, eol_date, term } =
-      command;
+    const {
+      id,
+      price,
+      currency,
+      effective_from,
+      effective_to,
+      is_active,
+      eol_date,
+      term,
+    } = command;
 
     // Logic to update the product using the repository
-    const productToUpdate = await this.productPricingRepository.findOne(id);
-    if (!productToUpdate) {
+    const previousProductPricing =
+      await this.productPricingRepository.findOne(id);
+    if (!previousProductPricing) {
       throw new Error(`Product with ID ${id} not found`);
     }
     // console.log(is_active);
     // Update the product properties
-    productToUpdate.price = price;
-    productToUpdate.currency = currency;
-    productToUpdate.effective_from = effective_from;
-    productToUpdate.effective_to = effective_to;
-    productToUpdate.is_active = is_active;
-    productToUpdate.eol_date = eol_date;
-    productToUpdate.term = term;
+    const productPricing = this.productPricingFactory.create({
+      product_id: previousProductPricing.product_id,
+      price,
+      currency,
+      effective_from,
+      effective_to,
+      is_active,
+      eol_date,
+      term,
+    });
+    await this.productPricingRepository.save(productPricing);
+
+    previousProductPricing.effective_to = effective_from;
     // console.log(productToUpdate);
     // Save the updated product
-    return await this.productPricingRepository.save(productToUpdate);
+    return await this.productPricingRepository.save(previousProductPricing);
   }
 }

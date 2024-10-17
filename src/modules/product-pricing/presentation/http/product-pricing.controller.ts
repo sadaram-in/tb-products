@@ -45,8 +45,8 @@ export class ProductPricingController {
         createProductPricingDto.currency,
         createProductPricingDto.is_active,
         createProductPricingDto.effective_from,
-        createProductPricingDto.effective_to || null,
-        createProductPricingDto.eol_date || null,
+        createProductPricingDto.effective_to || new Date(9999, 11, 31),
+        createProductPricingDto.eol_date || new Date(9999, 11, 31),
         createProductPricingDto.term || null,
       ),
     );
@@ -63,8 +63,8 @@ export class ProductPricingController {
       updateProductPricingDto.currency,
       updateProductPricingDto.is_active,
       updateProductPricingDto.effective_from,
-      updateProductPricingDto.effective_to || null,
-      updateProductPricingDto.eol_date || null,
+      updateProductPricingDto.effective_to || new Date(9999, 11, 31),
+      updateProductPricingDto.eol_date || new Date(9999, 11, 31),
       updateProductPricingDto.term || null,
     );
     return this.productPricingService.update(id, updateProductPricingCommand);
