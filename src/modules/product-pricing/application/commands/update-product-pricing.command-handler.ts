@@ -46,7 +46,9 @@ export class UpdateProductPricingCommandHandler
     });
     await this.productPricingRepository.save(productPricing);
 
-    previousProductPricing.effective_to = effective_from;
+    previousProductPricing.effective_to = new Date(
+      new Date(effective_from).getTime() - 1 * 24 * 60 * 60 * 1000,
+    );
     // console.log(productToUpdate);
     // Save the updated product
     return await this.productPricingRepository.save(previousProductPricing);
