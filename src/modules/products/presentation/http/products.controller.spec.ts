@@ -88,8 +88,8 @@ describe('ProductController', () => {
         golden_id: '123e4567-e89b-12d3-a456-426614174000',
         description: 'New Product Description',
         change_log: [],
-        effective_from: new Date(),
-        effective_to: new Date(),
+        start_date: new Date(),
+        end_date: new Date(),
         is_active: true,
       };
       const result: ApiResponseDto<any> = {

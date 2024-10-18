@@ -146,10 +146,10 @@
                                 <a href="#description" >description</a>
                             </li>
                             <li>
-                                <a href="#effective_from" >effective_from</a>
+                                <a href="#start_date" >start_date</a>
                             </li>
                             <li>
-                                <a href="#effective_to" >effective_to</a>
+                                <a href="#end_date" >end_date</a>
                             </li>
                             <li>
                                 <a href="#is_active" >is_active</a>
@@ -233,10 +233,10 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="effective_from"></a>
+                    <a name="start_date"></a>
                     <span class="name">
-                        <span ><b>effective_from</b></span>
-                        <a href="#effective_from"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>start_date</b></span>
+                        <a href="#start_date"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -259,10 +259,10 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="effective_to"></a>
+                    <a name="end_date"></a>
                     <span class="name">
-                        <span ><b>effective_to</b></span>
-                        <a href="#effective_to"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>end_date</b></span>
+                        <a href="#end_date"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -362,8 +362,8 @@ export class CreateProductDto {
   name: string;
   description: string;
   change_log: Record&lt;string, any&gt;;
-  effective_from: Date;
-  effective_to: Date | null;
+  start_date: Date;
+  end_date: Date | null;
   is_active: boolean;
 }
 </code></pre>

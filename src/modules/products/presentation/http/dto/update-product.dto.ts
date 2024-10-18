@@ -12,10 +12,10 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
-  effective_from?: Date;
+  start_date?: Date;
 
   @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsDateString()
-  effective_to?: Date | null;
+  end_date?: Date | null;
 }

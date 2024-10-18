@@ -15,8 +15,8 @@ export class UpdateProductCommandHandler
       name,
       description,
       change_log,
-      effective_from,
-      effective_to,
+      start_date,
+      end_date,
       is_active,
       golden_id,
     } = command;
@@ -32,8 +32,8 @@ export class UpdateProductCommandHandler
     productToUpdate.name = name;
     productToUpdate.description = description;
     productToUpdate.change_log = change_log;
-    productToUpdate.effective_from = effective_from;
-    productToUpdate.effective_to = effective_to;
+    productToUpdate.start_date = start_date;
+    productToUpdate.end_date = end_date;
     productToUpdate.is_active = is_active;
     // console.log(productToUpdate);
     // Save the updated product

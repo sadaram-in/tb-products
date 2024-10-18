@@ -324,8 +324,8 @@ export class ProductMapper {
       productEntity.name,
       productEntity.description,
       productEntity.change_log,
-      productEntity.effective_from,
-      productEntity.effective_to,
+      productEntity.start_date,
+      productEntity.end_date,
       productEntity.is_active,
     );
     return productModel;
@@ -337,8 +337,8 @@ export class ProductMapper {
     entity.name &#x3D; product.name;
     entity.description &#x3D; product.description;
     entity.change_log &#x3D; product.change_log;
-    entity.effective_from &#x3D; product.effective_from;
-    entity.effective_to &#x3D; product.effective_to;
+    entity.start_date &#x3D; product.start_date;
+    entity.end_date &#x3D; product.end_date;
     entity.is_active &#x3D; product.is_active;
     return entity;
   }

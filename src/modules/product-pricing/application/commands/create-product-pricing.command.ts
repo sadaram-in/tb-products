@@ -4,8 +4,8 @@ export class CreateProductPricingCommand {
     public readonly price: number,
     public readonly currency: string,
     public readonly is_active: boolean,
-    public readonly effective_from: Date,
-    public readonly effective_to: Date | null,
+    public readonly start_date: Date,
+    public readonly end_date: Date | null,
     public readonly eol_date: Date | null,
     public readonly term: string | null,
   ) {}

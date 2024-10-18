@@ -41,8 +41,8 @@ export class ProductsController {
         createProductDto.name,
         createProductDto.description,
         createProductDto.change_log,
-        createProductDto.effective_from,
-        createProductDto.effective_to,
+        createProductDto.start_date,
+        createProductDto.end_date,
         createProductDto.is_active,
       ),
     );
@@ -59,8 +59,8 @@ export class ProductsController {
       updateProductDto.name,
       updateProductDto.description,
       updateProductDto.change_log,
-      updateProductDto.effective_from,
-      updateProductDto.effective_to,
+      updateProductDto.start_date,
+      updateProductDto.end_date,
       updateProductDto.is_active,
     );
 

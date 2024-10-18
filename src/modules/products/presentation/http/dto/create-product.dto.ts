@@ -9,7 +9,6 @@ import {
   Length,
 } from 'class-validator';
 
-
 export class CreateProductDto {
   @ApiProperty()
   @IsUUID()
@@ -31,12 +30,12 @@ export class CreateProductDto {
 
   @ApiProperty()
   @IsDateString()
-  effective_from: Date;
+  start_date: Date;
 
   @ApiProperty({ nullable: true })
   @IsOptional()
   @IsDateString()
-  effective_to: Date | null;
+  end_date: Date | null;
 
   @ApiProperty()
   @IsBoolean()

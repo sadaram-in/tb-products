@@ -5,8 +5,8 @@ export class Product {
     public name: string,
     public description: string,
     public change_log: Record<string, any>,
-    public effective_from: Date,
-    public effective_to: Date | null,
+    public start_date: Date,
+    public end_date: Date | null,
     public is_active: boolean,
   ) {}
 }

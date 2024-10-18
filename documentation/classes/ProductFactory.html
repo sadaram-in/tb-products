@@ -248,8 +248,8 @@ export class ProductFactory {
       name,
       description,
       change_log,
-      effective_from,
-      effective_to,
+      start_date,
+      end_date,
       is_active,
     } &#x3D; createProductDto;
 
@@ -257,8 +257,8 @@ export class ProductFactory {
     product.name &#x3D; name;
     product.description &#x3D; description;
     product.change_log &#x3D; change_log;
-    product.effective_from &#x3D; effective_from;
-    product.effective_to &#x3D; effective_to;
+    product.start_date &#x3D; start_date;
+    product.end_date &#x3D; end_date;
     product.is_active &#x3D; is_active;
 
     return product;

@@ -327,8 +327,8 @@ export class ProductPricingMapper {
       entity.price,
       entity.currency,
       entity.is_active,
-      entity.effective_from,
-      entity.effective_to,
+      entity.start_date,
+      entity.end_date,
     );
   }
 
@@ -340,8 +340,8 @@ export class ProductPricingMapper {
     entity.price &#x3D; domain.price;
     entity.currency &#x3D; domain.currency;
     entity.is_active &#x3D; domain.is_active;
-    entity.effective_from &#x3D; domain.effective_from;
-    entity.effective_to &#x3D; domain.effective_to || null;
+    entity.start_date &#x3D; domain.start_date;
+    entity.end_date &#x3D; domain.end_date || null;
     return entity;
   }
 }

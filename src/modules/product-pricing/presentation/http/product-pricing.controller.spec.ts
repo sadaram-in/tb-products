@@ -77,8 +77,8 @@ describe('ProductPricingController', () => {
         price: 100,
         currency: 'USD',
         is_active: true,
-        effective_from: new Date(),
-        effective_to: null,
+        start_date: new Date(),
+        end_date: null,
         eol_date: null,
         term: null,
       };
@@ -104,8 +104,8 @@ describe('ProductPricingController', () => {
         price: 150,
         currency: 'EUR',
         is_active: false,
-        effective_from: new Date(),
-        effective_to: null,
+        start_date: new Date(),
+        end_date: null,
         eol_date: null,
         term: null,
       };

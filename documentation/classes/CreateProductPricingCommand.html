@@ -147,12 +147,12 @@
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Readonly</span>
-                                <a href="#effective_from" >effective_from</a>
+                                <a href="#start_date" >start_date</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Readonly</span>
-                                <a href="#effective_to" >effective_to</a>
+                                <a href="#end_date" >end_date</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -188,7 +188,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(product_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, price: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, currency: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, is_active: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, effective_from: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>, effective_to: Date | null)</code>
+<code>constructor(product_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, price: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, currency: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, is_active: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, start_date: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>, end_date: Date | null)</code>
                     </td>
                 </tr>
                         <tr>
@@ -259,7 +259,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>effective_from</td>
+                                                        <td>start_date</td>
                                                   
                                                         <td>
                                                                         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
@@ -271,7 +271,7 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>effective_to</td>
+                                                        <td>end_date</td>
                                                   
                                                         <td>
                                                                     <code>Date | null</code>
@@ -328,12 +328,12 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="effective_from"></a>
+                    <a name="start_date"></a>
                     <span class="name">
                             <span class="modifier">Public</span>
                             <span class="modifier">Readonly</span>
-                        <span ><b>effective_from</b></span>
-                        <a href="#effective_from"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>start_date</b></span>
+                        <a href="#start_date"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -356,12 +356,12 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="effective_to"></a>
+                    <a name="end_date"></a>
                     <span class="name">
                             <span class="modifier">Public</span>
                             <span class="modifier">Readonly</span>
-                        <span ><b>effective_to</b></span>
-                        <a href="#effective_to"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>end_date</b></span>
+                        <a href="#end_date"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -482,8 +482,8 @@
     public readonly price: number,
     public readonly currency: string,
     public readonly is_active: boolean,
-    public readonly effective_from: Date,
-    public readonly effective_to: Date | null,
+    public readonly start_date: Date,
+    public readonly end_date: Date | null,
   ) {}
 }
 </code></pre>

@@ -33,17 +33,17 @@ export class UpdateProductPricingDto extends PartialType(
   @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
-  effective_from?: Date;
+  start_date?: Date;
 
   @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsDateString()
-  effective_to?: Date | null;
+  end_date?: Date | null;
 
   @ApiPropertyOptional({ nullable: true })
   @IsOptional()
   @IsDateString()
-  @ValidateIf((o) => o.eol_date >= o.effective_to)
+  @ValidateIf((o) => o.eol_date >= o.end_date)
   eol_date?: Date | null;
 
   @ApiPropertyOptional({ nullable: true })

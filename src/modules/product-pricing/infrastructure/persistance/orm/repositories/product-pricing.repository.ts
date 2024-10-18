@@ -41,38 +41,17 @@ export class ProductPricingRepository implements IProductPricingRepository {
       .createQueryBuilder()
       .update(ProductPricingEntity)
       .set({ is_active: false })
-      .where('eol_date < :currentDate', { currentDate})
+      .where('eol_date < :currentDate', { currentDate })
       .execute();
-
-    }
   }
-  
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  // await this.productPricingRepository
-  //   .createQueryBuilder()
-  //   .update(ProductPricingEntity)
-  //   .set({ is_active: true })
-  //   .where(
-  //     'effective_from <= :currentDate AND (eol_date IS NULL OR eol_date >= :currentDate)',
-  //     { currentDate },
-  //   )
-  //   .execute();
+// await this.productPricingRepository
+//   .createQueryBuilder()
+//   .update(ProductPricingEntity)
+//   .set({ is_active: true })
+//   .where(
+//     'start_date <= :currentDate AND (eol_date IS NULL OR eol_date >= :currentDate)',
+//     { currentDate },
+//   )
+//   .execute();

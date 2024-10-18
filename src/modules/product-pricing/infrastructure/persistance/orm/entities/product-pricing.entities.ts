@@ -30,10 +30,10 @@ export class ProductPricingEntity {
   is_active: boolean;
 
   @Column({ type: 'date', nullable: false })
-  effective_from: Date;
+  start_date: Date;
 
   @Column({ type: 'date', nullable: true })
-  effective_to: Date;
+  end_date: Date;
 
   @Column({ type: 'date', nullable: true })
   eol_date: Date;

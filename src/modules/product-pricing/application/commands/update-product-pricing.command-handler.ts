@@ -19,8 +19,8 @@ export class UpdateProductPricingCommandHandler
       id,
       price,
       currency,
-      effective_from,
-      effective_to,
+      start_date,
+      end_date,
       is_active,
       eol_date,
       term,
@@ -38,16 +38,16 @@ export class UpdateProductPricingCommandHandler
       product_id: previousProductPricing.product_id,
       price,
       currency,
-      effective_from,
-      effective_to,
+      start_date,
+      end_date,
       is_active,
       eol_date,
       term,
     });
     await this.productPricingRepository.save(productPricing);
 
-    previousProductPricing.effective_to = new Date(
-      new Date(effective_from).getTime() - 1 * 24 * 60 * 60 * 1000,
+    previousProductPricing.end_date = new Date(
+      new Date(start_date).getTime() - 1 * 24 * 60 * 60 * 1000,
     );
     // console.log(productToUpdate);
     // Save the updated product

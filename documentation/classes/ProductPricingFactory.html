@@ -244,15 +244,15 @@ import { CreateProductPricingDto } from &quot;../../presentation/http/dto/create
 
 export class ProductPricingFactory {
   create(createProductPricingDto: CreateProductPricingDto): ProductPricingEntity {
-    const { product_id, price, currency, is_active, effective_from, effective_to } &#x3D; createProductPricingDto;
+    const { product_id, price, currency, is_active, start_date, end_date } &#x3D; createProductPricingDto;
 
     const productPricing &#x3D; new ProductPricingEntity();
     productPricing.product_id &#x3D; product_id;
     productPricing.price &#x3D; price;
     productPricing.currency &#x3D; currency;
     productPricing.is_active &#x3D; is_active;
-    productPricing.effective_from &#x3D; effective_from;
-    productPricing.effective_to &#x3D; effective_to;
+    productPricing.start_date &#x3D; start_date;
+    productPricing.end_date &#x3D; end_date;
 
     return productPricing;
   }

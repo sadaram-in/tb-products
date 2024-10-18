@@ -8,8 +8,8 @@ export class ProductFactory {
       golden_id,
       description,
       change_log,
-      effective_from,
-      effective_to,
+      start_date,
+      end_date,
       is_active,
     } = createProductDto;
 
@@ -18,8 +18,8 @@ export class ProductFactory {
     product.name = name;
     product.description = description;
     product.change_log = change_log;
-    product.effective_from = effective_from;
-    product.effective_to = effective_to;
+    product.start_date = start_date;
+    product.end_date = end_date;
     product.is_active = is_active;
 
     return product;

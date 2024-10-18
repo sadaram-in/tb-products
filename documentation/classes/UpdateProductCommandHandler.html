@@ -313,8 +313,8 @@ export class UpdateProductCommandHandler
       name,
       description,
       change_log,
-      effective_from,
-      effective_to,
+      start_date,
+      end_date,
       is_active,
     } &#x3D; command;
 
@@ -328,8 +328,8 @@ export class UpdateProductCommandHandler
     productToUpdate.name &#x3D; name;
     productToUpdate.description &#x3D; description;
     productToUpdate.change_log &#x3D; change_log;
-    productToUpdate.effective_from &#x3D; effective_from;
-    productToUpdate.effective_to &#x3D; effective_to;
+    productToUpdate.start_date &#x3D; start_date;
+    productToUpdate.end_date &#x3D; end_date;
     productToUpdate.is_active &#x3D; is_active;
     // console.log(productToUpdate);
     // Save the updated product

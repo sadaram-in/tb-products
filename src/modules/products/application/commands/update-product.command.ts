@@ -7,8 +7,8 @@ export class UpdateProductCommand {
     public readonly name: string,
     public readonly description: string,
     public readonly change_log: Record<string, any>,
-    public readonly effective_from: Date,
-    public readonly effective_to: Date | null,
+    public readonly start_date: Date,
+    public readonly end_date: Date | null,
     public readonly is_active: boolean,
   ) {}
 }
