@@ -3,7 +3,6 @@ import { UpdateProductPricingCommand } from './update-product-pricing.command';
 import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
 import { ProductPricing } from '../../domain/product-pricing';
 import { ProductPricingFactory } from '../../domain/factories/product-pricing.factory';
-import { ProductPricingEntity } from '../../infrastructure/persistance/orm/entities/product-pricing.entities';
 
 @CommandHandler(UpdateProductPricingCommand)
 export class UpdateProductPricingCommandHandler
@@ -40,63 +39,50 @@ export class UpdateProductPricingCommandHandler
     const MIN_DATE = new Date('1000-01-01');
     const MAX_DATE = new Date('9999-12-31');
 
+    // Find affected pricings for overlap scenarios
     const affectedPricings = await this.productPricingRepository.findByCommand(
       product_id,
-      start_date,
-      end_date,
+      MIN_DATE,
+      MAX_DATE,
       true,
     );
+
+    if (!affectedPricings) {
+      throw new Error('Unable to retrieve affected pricings.');
+    }
     console.log('affectedPricings', affectedPricings);
-
-    const numberOfRecords = (
-      await this.productPricingRepository.findByCommand(
-        product_id,
-        MIN_DATE,
-        MAX_DATE,
-        true,
-      )
-    ).length;
-
-    console.log(
-      'numberOfRecords',
-      numberOfRecords,
-      'number of affected',
-      affectedPricings.length,
-    );
-
-    if (
-      affectedPricings.length === 0 ||
-      affectedPricings.length === numberOfRecords
-    ) {
-      const allPricingsOfSameProduct =
-        await this.productPricingRepository.findByCommand(
-          product_id,
-          MIN_DATE,
-          MAX_DATE,
-          true,
-        );
-      console.log('allPricingsOfSameProduct', allPricingsOfSameProduct);
-      if (start_date < allPricingsOfSameProduct[0].start_date) {
-        const productPricing = this.productPricingFactory.create({
-          product_id,
-          price,
-          currency,
-          start_date,
-          end_date: new Date(
-            getPreviousDay(allPricingsOfSameProduct[0].start_date),
-          ),
+    // Case 1: Fully overlap
+    for (const pricing of affectedPricings) {
+      if (start_date >= pricing.start_date && end_date <= pricing.end_date) {
+        const leftPricing = this.productPricingFactory.create({
+          product_id: pricing.product_id,
+          price: pricing.price,
+          currency: pricing.currency,
+          start_date: pricing.start_date,
+          end_date: getPreviousDay(start_date),
           is_active: true,
-          eol_date,
-          term,
+          eol_date: pricing.eol_date,
+          term: pricing.term,
         });
-        return await this.productPricingRepository.save(productPricing);
-      } else {
-        const changeRecord =
-          allPricingsOfSameProduct[allPricingsOfSameProduct.length - 1];
-        changeRecord.end_date = getPreviousDay(start_date);
-        await this.productPricingRepository.save(changeRecord);
+        console.log('leftPricing', leftPricing);
+        await this.productPricingRepository.save(leftPricing);
 
-        const productPricing = this.productPricingFactory.create({
+        const rightPricing = this.productPricingFactory.create({
+          product_id: pricing.product_id,
+          price: pricing.price,
+          currency: pricing.currency,
+          start_date: getNextDay(end_date),
+          end_date: pricing.end_date,
+          is_active: true,
+          eol_date: pricing.eol_date,
+          term: pricing.term,
+        });
+        console.log('rightPricing', rightPricing);
+        await this.productPricingRepository.save(rightPricing);
+
+        await this.productPricingRepository.delete(pricing.id);
+
+        const newPricing = this.productPricingFactory.create({
           product_id,
           price,
           currency,
@@ -106,18 +92,67 @@ export class UpdateProductPricingCommandHandler
           eol_date,
           term,
         });
-        return await this.productPricingRepository.save(productPricing);
+        return await this.productPricingRepository.save(newPricing);
       }
     }
 
+    const allPricings = await this.productPricingRepository.findByCommand(
+      product_id,
+      MIN_DATE,
+      MAX_DATE,
+      true,
+    );
+
+    if (!allPricings || allPricings.length === 0) {
+      throw new Error('Unable to retrieve pricings for this product.');
+    }
+
+    // Case 2: No affected pricings or all affected
+    if (
+      affectedPricings.length === 0 ||
+      affectedPricings.length === allPricings.length
+    ) {
+      if (start_date < allPricings[0]?.start_date) {
+        const newPricing = this.productPricingFactory.create({
+          product_id,
+          price,
+          currency,
+          start_date,
+          end_date: getPreviousDay(allPricings[0].start_date),
+          is_active: true,
+          eol_date,
+          term,
+        });
+        return await this.productPricingRepository.save(newPricing);
+      } else {
+        const lastPricing = allPricings[allPricings.length - 1];
+        if (lastPricing) {
+          lastPricing.end_date = getPreviousDay(start_date);
+          await this.productPricingRepository.save(lastPricing);
+        }
+
+        const newPricing = this.productPricingFactory.create({
+          product_id,
+          price,
+          currency,
+          start_date,
+          end_date,
+          is_active: true,
+          eol_date,
+          term,
+        });
+        return await this.productPricingRepository.save(newPricing);
+      }
+    }
+
+    // Case 3: Partial overlap (left and right adjustments)
     const leftPricings = await this.productPricingRepository.findByCommand(
       product_id,
-      new Date('1000-01-01'),
+      MIN_DATE,
       start_date,
       true,
     );
 
-    console.log('leftPricings', leftPricings);
     if (leftPricings.length > 0) {
       const leftmostPricing = leftPricings[leftPricings.length - 1];
       leftmostPricing.end_date = getPreviousDay(start_date);
@@ -127,10 +162,9 @@ export class UpdateProductPricingCommandHandler
     const rightPricings = await this.productPricingRepository.findByCommand(
       product_id,
       start_date,
-      new Date('9999-12-31'),
+      MAX_DATE,
       true,
     );
-    console.log('rightPricings', rightPricings);
 
     if (rightPricings.length > 0) {
       const rightmostPricing = rightPricings[0];
@@ -138,7 +172,8 @@ export class UpdateProductPricingCommandHandler
       await this.productPricingRepository.save(rightmostPricing);
     }
 
-    const productPricing = this.productPricingFactory.create({
+    // Create new pricing for the specified range
+    const newPricing = this.productPricingFactory.create({
       product_id,
       price,
       currency,
@@ -148,6 +183,6 @@ export class UpdateProductPricingCommandHandler
       eol_date,
       term,
     });
-    return await this.productPricingRepository.save(productPricing);
+    return await this.productPricingRepository.save(newPricing);
   }
 }
