@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ResponseService } from 'src/shared/response/response.service';
 import { GetProductPricingQuery } from './queries/get-product-pricing.query';
-import { GetProductPricingByIdQuery } from './queries/get-product-pricing-by-id.query';
+import { GetProductPricingByProductIdQuery } from './queries/get-product-pricing-by-product-id.query';
 import { CreateProductPricingCommand } from './commands/create-product-pricing.command';
 import { UpdateProductPricingCommand } from './commands/update-product-pricing.command';
 import { DeleteProductPricingCommand } from './commands/delete-product-pricing.command';
 import { ApiResponseDto } from 'src/shared/response/dto/api-response.dto';
 import { statusCodes, responseCodesPRP } from 'src/shared/constants/constants';
+import { GetProductPricingByIdQuery } from './queries/get-product-pricing-by-id.query';
 
 @Injectable()
 export class ProductPricingService {
@@ -44,7 +45,7 @@ export class ProductPricingService {
     startDate: Date,
   ): Promise<ApiResponseDto<any>> {
     const result = await this.queryBus.execute(
-      new GetProductPricingByIdQuery(product_id, startDate),
+      new GetProductPricingByProductIdQuery(product_id, startDate),
     );
     if (!result) {
       return this.responseService.handleNotFound(
@@ -71,7 +72,7 @@ export class ProductPricingService {
     updateProductPricingCommand: UpdateProductPricingCommand,
   ): Promise<ApiResponseDto<any>> {
     const pricing = await this.queryBus.execute(
-      new GetProductPricingByIdQuery(product_id, startDate),
+      new GetProductPricingByProductIdQuery(product_id, startDate),
     );
     if (!pricing) {
       return this.responseService.handleNotFound(
@@ -94,30 +95,27 @@ export class ProductPricingService {
   }
 
   async remove(
-    product_id: string,
-    startDate: Date,
+    id: string,
   ): Promise<ApiResponseDto<any>> {
     const pricing = await this.queryBus.execute(
-      new GetProductPricingByIdQuery(product_id, startDate),
+      new GetProductPricingByIdQuery(id),
     );
     if (!pricing) {
       return this.responseService.handleNotFound(
         'error',
         {
-          message: `Pricing with ID ${product_id} not found`,
+          message: `Pricing with ID ${id} not found`,
         },
         statusCodes.NOT_FOUND,
         responseCodesPRP.NOT_FOUND,
       );
     }
 
-    await this.commandBus.execute(
-      new DeleteProductPricingCommand(product_id),
-    );
+    await this.commandBus.execute(new DeleteProductPricingCommand(id));
     return this.responseService.buildErrorResponse(
       'success',
       {
-        message: `Pricing with ID ${product_id} deleted successfully`,
+        message: `Pricing with ID ${id} deleted successfully`,
       },
       statusCodes.SUCCESS,
       responseCodesPRP.SUCCESS,

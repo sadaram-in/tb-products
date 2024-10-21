@@ -12,6 +12,7 @@ import { DeleteProductPricingCommandHandler } from './commands/delete-product-pr
 
 // Queries
 import { GetProductPricingByIdQueryHandler } from './queries/get-product-pricing-by-id.query-handler';
+import { GetProductPricingByProductIdQueryHandler } from './queries/get-product-pricing-by-product-id.query-handler';
 import { GetProductPricingsQueryHandler } from './queries/get-product-pricing.query-handler';
 
 // Factories
@@ -43,6 +44,7 @@ import { UpdateIsActiveCron } from '../../../shared/cron/update-is-active.cron';
     DeleteProductPricingCommandHandler,
 
     GetProductPricingByIdQueryHandler,
+    GetProductPricingByProductIdQueryHandler,
     GetProductPricingsQueryHandler,
   ],
 })

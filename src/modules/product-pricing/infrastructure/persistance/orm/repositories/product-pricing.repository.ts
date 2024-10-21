@@ -51,14 +51,11 @@ export class ProductPricingRepository implements IProductPricingRepository {
       .where('eol_date < :currentDate', { currentDate })
       .execute();
   }
-}
 
-// await this.productPricingRepository
-//   .createQueryBuilder()
-//   .update(ProductPricingEntity)
-//   .set({ is_active: true })
-//   .where(
-//     'start_date <= :currentDate AND (eol_date IS NULL OR eol_date >= :currentDate)',
-//     { currentDate },
-//   )
-//   .execute();
+  async findOneById(id: string): Promise<ProductPricing> {
+    const entity = await this.productPricingRepository.findOne({
+      where: { id },
+    });
+    return ProductPricingMapper.toDomain(entity);
+  }
+}

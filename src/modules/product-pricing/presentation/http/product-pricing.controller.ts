@@ -86,6 +86,6 @@ export class ProductPricingController {
   // DELETE a ProductPricing by ID
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.productPricingService.remove(id, new Date());
+    return this.productPricingService.remove(id);
   }
 }
