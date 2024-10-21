@@ -1,6 +1,7 @@
 export class UpdateProductPricingCommand {
   constructor(
     public readonly id: string,
+    public readonly product_id: string,
     public readonly price: number,
     public readonly currency: string,
     public readonly is_active: boolean,

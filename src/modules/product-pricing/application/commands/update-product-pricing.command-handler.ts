@@ -17,6 +17,7 @@ export class UpdateProductPricingCommandHandler
   async execute(command: UpdateProductPricingCommand): Promise<ProductPricing> {
     const {
       id,
+      product_id,
       price,
       currency,
       start_date,
@@ -27,8 +28,10 @@ export class UpdateProductPricingCommandHandler
     } = command;
 
     // Logic to update the product using the repository
-    const previousProductPricing =
-      await this.productPricingRepository.findOne(id);
+    const previousProductPricing = await this.productPricingRepository.findOne(
+      id,
+      start_date,
+    );
     if (!previousProductPricing) {
       throw new Error(`Product with ID ${id} not found`);
     }

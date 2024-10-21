@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  Unique,
 } from 'typeorm';
 import { ProductEntity } from 'src/modules/products/infrastructure/persistance/orm/entities/product.entities';
 
@@ -18,6 +19,7 @@ export class ProductPricingEntity {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'product_id' })
+  @Column({ type: 'uuid', nullable: false })
   product_id: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })

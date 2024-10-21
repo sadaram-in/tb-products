@@ -12,11 +12,14 @@ export class GetProductPricingByIdQueryHandler
   ) {}
   async execute(query: GetProductPricingByIdQuery): Promise<ProductPricing> {
     const productPricing = await this.productPricingRepository.findOne(
-      query.id,
+      query.product_id,
+      query.startDate,
     );
 
     if (!productPricing) {
-      throw new Error(`Product pricing with ID ${query.id} not found`);
+      throw new Error(
+        `Product pricing with of product with ID ${query.product_id} not found`,
+      );
     }
 
     return productPricing;

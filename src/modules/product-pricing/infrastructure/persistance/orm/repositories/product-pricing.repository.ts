@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { LessThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IProductPricingRepository } from '../../../../domain/ports/product-pricing.repository';
 import { ProductPricing } from '../../../../domain/product-pricing';
@@ -18,11 +18,18 @@ export class ProductPricingRepository implements IProductPricingRepository {
     return entities.map((item) => ProductPricingMapper.toDomain(item));
   }
 
-  async findOne(id: string): Promise<ProductPricing> {
-    const entity = await this.productPricingRepository.findOne({
-      where: { id },
+  async findOne(product_id: string, startDate: Date): Promise<ProductPricing> {
+    console.log(product_id, startDate);
+    const entity = await this.productPricingRepository.find({
+      where: {
+        product_id: product_id,
+        start_date: LessThanOrEqual(startDate),
+      },
+      order: {
+        start_date: 'DESC',
+      },
     });
-    return ProductPricingMapper.toDomain(entity);
+    return ProductPricingMapper.toDomain(entity[0]);
   }
 
   async save(productPricing: ProductPricing): Promise<ProductPricing> {

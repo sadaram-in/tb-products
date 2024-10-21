@@ -15,6 +15,7 @@ import { UpdateProductPricingCommand } from '../../application/commands/update-p
 import { CreateProductPricingDto } from './dto/create-product-pricing.dto';
 import { UpdateProductPricingDto } from './dto/update-product-pricing.dto';
 import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
+import { GetProductPricingDto } from './dto/get-product-pricing.dto';
 
 @UseInterceptors(LoggingInterceptor)
 @Controller({
@@ -25,9 +26,16 @@ export class ProductPricingController {
   constructor(private readonly productPricingService: ProductPricingService) {}
 
   // GET a single ProductPricing by ID
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.productPricingService.findOne(id);
+  @Get(':product_id')
+  async findOne(
+    @Param('product_id') product_id: string,
+    @Body() getProductPricingDto: GetProductPricingDto,
+  ) {
+    // console.log(product_id, getProductPricingDto.start_date);
+    return this.productPricingService.findOne(
+      product_id,
+      getProductPricingDto.start_date,
+    );
   }
 
   // GET all ProductPricings
@@ -59,6 +67,7 @@ export class ProductPricingController {
   ) {
     const updateProductPricingCommand = new UpdateProductPricingCommand(
       id,
+      updateProductPricingDto.product_id,
       updateProductPricingDto.price,
       updateProductPricingDto.currency,
       updateProductPricingDto.is_active,
@@ -67,12 +76,16 @@ export class ProductPricingController {
       updateProductPricingDto.eol_date || new Date(9999, 11, 31),
       updateProductPricingDto.term || null,
     );
-    return this.productPricingService.update(id, updateProductPricingCommand);
+    return this.productPricingService.update(
+      updateProductPricingDto.product_id,
+      new Date(),
+      updateProductPricingCommand,
+    );
   }
 
   // DELETE a ProductPricing by ID
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.productPricingService.remove(id);
+    return this.productPricingService.remove(id, new Date());
   }
 }

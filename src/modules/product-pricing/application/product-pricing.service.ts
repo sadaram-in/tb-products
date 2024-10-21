@@ -20,7 +20,6 @@ export class ProductPricingService {
   async create(
     createProductPricingCommand: CreateProductPricingCommand,
   ): Promise<ApiResponseDto<any>> {
-
     const result = await this.commandBus.execute(createProductPricingCommand);
     return this.responseService.buildErrorResponse(
       'success',
@@ -40,16 +39,19 @@ export class ProductPricingService {
     );
   }
 
-  async findOne(id: string): Promise<ApiResponseDto<any>> {
+  async findOne(
+    product_id: string,
+    startDate: Date,
+  ): Promise<ApiResponseDto<any>> {
     const result = await this.queryBus.execute(
-      new GetProductPricingByIdQuery(id),
+      new GetProductPricingByIdQuery(product_id, startDate),
     );
     if (!result) {
       return this.responseService.handleNotFound(
         'error',
         {
           message: 'Product pricing not found',
-          id,
+          product_id,
         },
         statusCodes.NOT_FOUND,
         responseCodesPRP.NOT_FOUND,
@@ -64,17 +66,18 @@ export class ProductPricingService {
   }
 
   async update(
-    id: string,
+    product_id: string,
+    startDate: Date,
     updateProductPricingCommand: UpdateProductPricingCommand,
   ): Promise<ApiResponseDto<any>> {
     const pricing = await this.queryBus.execute(
-      new GetProductPricingByIdQuery(id),
+      new GetProductPricingByIdQuery(product_id, startDate),
     );
     if (!pricing) {
       return this.responseService.handleNotFound(
         'error',
         {
-          message: `Pricing with ID ${id} not found`,
+          message: `Pricing with ID ${product_id} not found`,
         },
         statusCodes.NOT_FOUND,
         responseCodesPRP.NOT_FOUND,
@@ -90,26 +93,31 @@ export class ProductPricingService {
     );
   }
 
-  async remove(id: string): Promise<ApiResponseDto<any>> {
+  async remove(
+    product_id: string,
+    startDate: Date,
+  ): Promise<ApiResponseDto<any>> {
     const pricing = await this.queryBus.execute(
-      new GetProductPricingByIdQuery(id),
+      new GetProductPricingByIdQuery(product_id, startDate),
     );
     if (!pricing) {
       return this.responseService.handleNotFound(
         'error',
         {
-          message: `Pricing with ID ${id} not found`,
+          message: `Pricing with ID ${product_id} not found`,
         },
         statusCodes.NOT_FOUND,
         responseCodesPRP.NOT_FOUND,
       );
     }
 
-    await this.commandBus.execute(new DeleteProductPricingCommand(id));
+    await this.commandBus.execute(
+      new DeleteProductPricingCommand(product_id),
+    );
     return this.responseService.buildErrorResponse(
       'success',
       {
-        message: `Pricing with ID ${id} deleted successfully`,
+        message: `Pricing with ID ${product_id} deleted successfully`,
       },
       statusCodes.SUCCESS,
       responseCodesPRP.SUCCESS,

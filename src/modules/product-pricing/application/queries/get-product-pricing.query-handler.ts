@@ -15,6 +15,7 @@ export class GetProductPricingsQueryHandler
 
   async execute(query: GetProductPricingQuery) {
     this.logger.debug(`Fetching all ProductPricings`);
-    return this.productPricingRepository.findAll();
+    console.log(await this.productPricingRepository.findAll());
+    return await this.productPricingRepository.findAll();
   }
 }
