@@ -37,134 +37,113 @@ export class UpdateProductPricingCommandHandler
       return nextDay;
     };
 
+    const MIN_DATE = new Date('1000-01-01');
+    const MAX_DATE = new Date('9999-12-31');
+
     const affectedPricings = await this.productPricingRepository.findByCommand(
       product_id,
       start_date,
       end_date,
       true,
     );
-    console.log(affectedPricings);
+    console.log('affectedPricings', affectedPricings);
 
-    if (affectedPricings.length === 0) {
-      const affectedPricings =
+    const numberOfRecords = (
+      await this.productPricingRepository.findByCommand(
+        product_id,
+        MIN_DATE,
+        MAX_DATE,
+        true,
+      )
+    ).length;
+
+    console.log(
+      'numberOfRecords',
+      numberOfRecords,
+      'number of affected',
+      affectedPricings.length,
+    );
+
+    if (
+      affectedPricings.length === 0 ||
+      affectedPricings.length === numberOfRecords
+    ) {
+      const allPricingsOfSameProduct =
         await this.productPricingRepository.findByCommand(
           product_id,
-          new Date('1000-01-01'),
-          new Date('9999-12-31'),
+          MIN_DATE,
+          MAX_DATE,
           true,
         );
-      const changePrice = affectedPricings[affectedPricings.length - 1];
-      changePrice.end_date = getPreviousDay(start_date);
-      
-      await this.productPricingRepository.save(changePrice);
+      console.log('allPricingsOfSameProduct', allPricingsOfSameProduct);
+        if (start_date < allPricingsOfSameProduct[0].start_date) {
+        const productPricing = this.productPricingFactory.create({
+          product_id,
+          price,
+          currency,
+          start_date,
+          end_date: new Date(getPreviousDay(allPricingsOfSameProduct[0].start_date)),
+          is_active: true,
+          eol_date,
+          term,
+        });
+        return await this.productPricingRepository.save(productPricing);
+      } else {
+        const changeRecord =
+          allPricingsOfSameProduct[allPricingsOfSameProduct.length - 1];
+        changeRecord.end_date = getPreviousDay(start_date);
+        await this.productPricingRepository.save(changeRecord);
 
-      const productPricing = this.productPricingFactory.create({
-        product_id,
-        price,
-        currency,
-        start_date,
-        end_date,
-        is_active: true,
-        eol_date,
-        term,
-      });
-      return await this.productPricingRepository.save(productPricing);
+        const productPricing = this.productPricingFactory.create({
+          product_id,
+          price,
+          currency,
+          start_date,
+          end_date,
+          is_active: true,
+          eol_date,
+          term,
+        });
+        return await this.productPricingRepository.save(productPricing);
+      }
     }
-    
 
-    // if (start_date < affectedPricings[0].start_date) {
-    //   const earlierPricing = await this.productPricingRepository.findByCommand(
-    //     product_id,
-    //     start_date,
-    //     affectedPricings[0].start_date,
-    //     false,
-    //   );      
+    // const leftPricings = await this.productPricingRepository.findByCommand(
+    //   product_id,
+    //   new Date('1000-01-01'),
+    //   start_date,
+    //   true,
+    // );
 
-    //   for (let i = 0; i < earlierPricing.length; i++) {
-    //     const current = earlierPricing[i];
-
-    //     if (current) {
-    //       const productPricing = new ProductPricingEntity();
-
-    //       productPricing.id = current.id;
-    //       productPricing.product_id = current.product_id;
-    //       productPricing.price = current.price;
-    //       productPricing.currency = current.currency;
-    //       productPricing.is_active = true;
-    //       productPricing.start_date = current.start_date;
-    //       productPricing.end_date = getPreviousDay(start_date);
-    //       productPricing.eol_date = current.eol_date;
-    //       productPricing.term = current.term;
-    //       await this.productPricingRepository.save(productPricing);
-    //     }
-    //   }
+    // console.log('leftPricings', leftPricings);
+    // if (leftPricings.length > 0) {
+    //   const leftmostPricing = leftPricings[leftPricings.length - 1];
+    //   leftmostPricing.end_date = getPreviousDay(start_date);
+    //   await this.productPricingRepository.save(leftmostPricing);
     // }
 
-    // for (let i = 0; i < affectedPricings.length; i++) {
-    //   const current = affectedPricings[i];
-
-    //   if (i === 0 && start_date > current.start_date) {
-    //     // Split the first record if necessary
-
-    //     const productPricing = new ProductPricingEntity();
-
-    //     productPricing.id = current.id;
-    //     productPricing.product_id = current.product_id;
-    //     productPricing.price = current.price;
-    //     productPricing.currency = current.currency;
-    //     productPricing.is_active = false;
-    //     productPricing.start_date = current.start_date;
-    //     productPricing.end_date = getPreviousDay(start_date);
-    //     productPricing.eol_date = current.eol_date;
-    //     productPricing.term = current.term;
-    //     await this.productPricingRepository.save(productPricing);
-
-    //     const newSplit = this.productPricingFactory.create({
-    //       ...current,
-    //       start_date: start_date,
-    //       end_date: current.end_date,
-    //     });
-    //     await this.productPricingRepository.save(newSplit);
-    //   }
-
-    //   if (i === affectedPricings.length - 1 && end_date < current.end_date) {
-    //     // Split the last record if necessary
-    //     const productPricing = new ProductPricingEntity();
-
-    //     productPricing.id = current.id;
-    //     productPricing.start_date = getNextDay(end_date);
-
-    //     const newSplit = this.productPricingFactory.create({
-    //       ...current,
-    //       start_date: current.start_date,
-    //       end_date: end_date,
-    //     });
-    //     await this.productPricingRepository.save(newSplit);
-    //   }
-
-    //   // Update the record with new data
-    //   await this.productPricingRepository.save({
-    //     ...current,
-    //     start_date: start_date,
-    //     end_date: end_date,
-    //   });
+    // const rightPricings = await this.productPricingRepository.findByCommand(
+    //   product_id,
+    //   end_date,
+    //   new Date('9999-12-31'),
+    //   true,
+    // );
+    // if (rightPricings.length > 0) {
+    //   const rightmostPricing = rightPricings[0];
+    //   rightmostPricing.start_date = getNextDay(end_date);
+    //   await this.productPricingRepository.save(rightmostPricing);
     // }
 
-    // const lastAffected = affectedPricings[affectedPricings.length - 1];
-    // if (end_date > lastAffected.end_date) {
-    //   const laterPricing = await this.productPricingRepository.findByCommand(
-    //     product_id,
-    //     lastAffected.end_date,
-    //     end_date,
-    //     false,
-    //   );
-    //   if (laterPricing) {
-    //     const productPricing = new ProductPricingEntity();
-
-    //     productPricing.id = laterPricing[0].id;
-    //     productPricing.start_date = getNextDay(end_date);
-    //     await this.productPricingRepository.save(productPricing);
-    //   }
-    // }
+    // const productPricing = this.productPricingFactory.create({
+    //   product_id,
+    //   price,
+    //   currency,
+    //   start_date,
+    //   end_date,
+    //   is_active: true,
+    //   eol_date,
+    //   term,
+    // });
+    // return await this.productPricingRepository.save(productPricing);
   }
 }
