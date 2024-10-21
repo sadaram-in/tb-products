@@ -76,13 +76,15 @@ export class UpdateProductPricingCommandHandler
           true,
         );
       console.log('allPricingsOfSameProduct', allPricingsOfSameProduct);
-        if (start_date < allPricingsOfSameProduct[0].start_date) {
+      if (start_date < allPricingsOfSameProduct[0].start_date) {
         const productPricing = this.productPricingFactory.create({
           product_id,
           price,
           currency,
           start_date,
-          end_date: new Date(getPreviousDay(allPricingsOfSameProduct[0].start_date)),
+          end_date: new Date(
+            getPreviousDay(allPricingsOfSameProduct[0].start_date),
+          ),
           is_active: true,
           eol_date,
           term,
@@ -108,42 +110,44 @@ export class UpdateProductPricingCommandHandler
       }
     }
 
-    // const leftPricings = await this.productPricingRepository.findByCommand(
-    //   product_id,
-    //   new Date('1000-01-01'),
-    //   start_date,
-    //   true,
-    // );
+    const leftPricings = await this.productPricingRepository.findByCommand(
+      product_id,
+      new Date('1000-01-01'),
+      start_date,
+      true,
+    );
 
-    // console.log('leftPricings', leftPricings);
-    // if (leftPricings.length > 0) {
-    //   const leftmostPricing = leftPricings[leftPricings.length - 1];
-    //   leftmostPricing.end_date = getPreviousDay(start_date);
-    //   await this.productPricingRepository.save(leftmostPricing);
-    // }
+    console.log('leftPricings', leftPricings);
+    if (leftPricings.length > 0) {
+      const leftmostPricing = leftPricings[leftPricings.length - 1];
+      leftmostPricing.end_date = getPreviousDay(start_date);
+      await this.productPricingRepository.save(leftmostPricing);
+    }
 
-    // const rightPricings = await this.productPricingRepository.findByCommand(
-    //   product_id,
-    //   end_date,
-    //   new Date('9999-12-31'),
-    //   true,
-    // );
-    // if (rightPricings.length > 0) {
-    //   const rightmostPricing = rightPricings[0];
-    //   rightmostPricing.start_date = getNextDay(end_date);
-    //   await this.productPricingRepository.save(rightmostPricing);
-    // }
+    const rightPricings = await this.productPricingRepository.findByCommand(
+      product_id,
+      start_date,
+      new Date('9999-12-31'),
+      true,
+    );
+    console.log('rightPricings', rightPricings);
 
-    // const productPricing = this.productPricingFactory.create({
-    //   product_id,
-    //   price,
-    //   currency,
-    //   start_date,
-    //   end_date,
-    //   is_active: true,
-    //   eol_date,
-    //   term,
-    // });
-    // return await this.productPricingRepository.save(productPricing);
+    if (rightPricings.length > 0) {
+      const rightmostPricing = rightPricings[0];
+      rightmostPricing.start_date = getNextDay(end_date);
+      await this.productPricingRepository.save(rightmostPricing);
+    }
+
+    const productPricing = this.productPricingFactory.create({
+      product_id,
+      price,
+      currency,
+      start_date,
+      end_date,
+      is_active: true,
+      eol_date,
+      term,
+    });
+    return await this.productPricingRepository.save(productPricing);
   }
 }
