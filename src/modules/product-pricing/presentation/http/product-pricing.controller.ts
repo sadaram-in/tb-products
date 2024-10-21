@@ -38,6 +38,11 @@ export class ProductPricingController {
     );
   }
 
+  @Get('/:id')
+  async findById(@Param('id') id: string) {
+    return this.productPricingService.findById(id);
+  }
+
   // GET all ProductPricings
   @Get()
   async findAll() {
@@ -60,27 +65,21 @@ export class ProductPricingController {
     );
   }
 
-  @Patch(':id')
+  @Patch(':product_id')
   async update(
-    @Param('id') id: string,
+    @Param('product_id') product_id: string,
     @Body() updateProductPricingDto: UpdateProductPricingDto,
   ) {
     const updateProductPricingCommand = new UpdateProductPricingCommand(
-      id,
-      updateProductPricingDto.product_id,
+      product_id,
       updateProductPricingDto.price,
       updateProductPricingDto.currency,
-      updateProductPricingDto.is_active,
       updateProductPricingDto.start_date,
       updateProductPricingDto.end_date || new Date(9999, 11, 31),
       updateProductPricingDto.eol_date || new Date(9999, 11, 31),
       updateProductPricingDto.term || null,
     );
-    return this.productPricingService.update(
-      updateProductPricingDto.product_id,
-      new Date(),
-      updateProductPricingCommand,
-    );
+    return this.productPricingService.update(updateProductPricingCommand);
   }
 
   // DELETE a ProductPricing by ID
