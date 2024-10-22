@@ -26,7 +26,7 @@ export class ProductPricingController {
   constructor(private readonly productPricingService: ProductPricingService) {}
 
   // GET a single ProductPricing by ID
-  @Get(':product_id')
+  @Post(':product_id')
   async findOne(
     @Param('product_id') product_id: string,
     @Body() getProductPricingDto: GetProductPricingDto,
