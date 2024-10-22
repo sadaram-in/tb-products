@@ -50,7 +50,7 @@ export class UpdateProductPricingCommandHandler
     if (!affectedPricings) {
       throw new Error('Unable to retrieve affected pricings.');
     }
-    console.log('affectedPricings', affectedPricings);
+    // console.log('affectedPricings', affectedPricings);
     // Case 1: Fully overlap
     for (const pricing of affectedPricings) {
       if (start_date >= pricing.start_date && end_date <= pricing.end_date) {
@@ -95,54 +95,43 @@ export class UpdateProductPricingCommandHandler
         return await this.productPricingRepository.save(newPricing);
       }
     }
-
-    const allPricings = await this.productPricingRepository.findByCommand(
-      product_id,
-      MIN_DATE,
-      MAX_DATE,
-      true,
-    );
-
-    if (!allPricings || allPricings.length === 0) {
+    if (!affectedPricings || affectedPricings.length === 0) {
       throw new Error('Unable to retrieve pricings for this product.');
     }
 
     // Case 2: No affected pricings or all affected
-    if (
-      affectedPricings.length === 0 ||
-      affectedPricings.length === allPricings.length
-    ) {
-      if (start_date < allPricings[0]?.start_date) {
-        const newPricing = this.productPricingFactory.create({
-          product_id,
-          price,
-          currency,
-          start_date,
-          end_date: getPreviousDay(allPricings[0].start_date),
-          is_active: true,
-          eol_date,
-          term,
-        });
-        return await this.productPricingRepository.save(newPricing);
-      } else {
-        const lastPricing = allPricings[allPricings.length - 1];
-        if (lastPricing) {
-          lastPricing.end_date = getPreviousDay(start_date);
-          await this.productPricingRepository.save(lastPricing);
-        }
 
-        const newPricing = this.productPricingFactory.create({
-          product_id,
-          price,
-          currency,
-          start_date,
-          end_date,
-          is_active: true,
-          eol_date,
-          term,
-        });
-        return await this.productPricingRepository.save(newPricing);
+    if (start_date < affectedPricings[0]?.start_date) {
+      const newPricing = this.productPricingFactory.create({
+        product_id,
+        price,
+        currency,
+        start_date,
+        end_date: getPreviousDay(affectedPricings[0].start_date),
+        is_active: true,
+        eol_date,
+        term,
+      });
+      return await this.productPricingRepository.save(newPricing);
+    }
+    if (end_date > affectedPricings[affectedPricings.length - 1]?.end_date) {
+      const lastPricing = affectedPricings[affectedPricings.length - 1];
+      if (lastPricing) {
+        lastPricing.end_date = getPreviousDay(start_date);
+        await this.productPricingRepository.save(lastPricing);
       }
+
+      const newPricing = this.productPricingFactory.create({
+        product_id,
+        price,
+        currency,
+        start_date,
+        end_date,
+        is_active: true,
+        eol_date,
+        term,
+      });
+      return await this.productPricingRepository.save(newPricing);
     }
 
     // Case 3: Partial overlap (left and right adjustments)
