@@ -9,7 +9,7 @@ import { ProductRepository } from './repositories/product.repository';
   providers: [
     {
       provide: IProductRepository,
-      useClass: ProductRepository, // 💡 This is where we bind the port to an adapter
+      useClass: ProductRepository, 
     },
   ],
   exports: [ProductRepository],
