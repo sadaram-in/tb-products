@@ -19,10 +19,16 @@ export class UpdateDiscountCommandHandler
     }
     // console.log(is_active);
     // Update the product properties
-    discountToUpdate.percentage = percentage;
-    discountToUpdate.discount_type = discount_type;
-    discountToUpdate.start_date = start_date;
-    discountToUpdate.end_date = end_date;
+    discountToUpdate.percentage = percentage
+      ? percentage
+      : discountToUpdate.percentage;
+    discountToUpdate.discount_type = discount_type
+      ? discount_type
+      : discountToUpdate.discount_type;
+    discountToUpdate.start_date = start_date
+      ? start_date
+      : discountToUpdate.start_date;
+    discountToUpdate.end_date = end_date ? end_date : discountToUpdate.end_date;
     // console.log(discountToUpdate);
     // Save the updated product
     return await this.discountRepository.save(discountToUpdate);
