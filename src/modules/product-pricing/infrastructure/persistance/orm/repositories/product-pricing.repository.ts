@@ -20,7 +20,7 @@ export class ProductPricingRepository implements IProductPricingRepository {
 
   async findOne(product_id: string, startDate: Date): Promise<ProductPricing> {
     console.log(product_id, startDate);
-    const entity = await this.productPricingRepository.find({
+    const entities = await this.productPricingRepository.find({
       where: {
         product_id: product_id,
         start_date: LessThanOrEqual(startDate),
@@ -29,7 +29,15 @@ export class ProductPricingRepository implements IProductPricingRepository {
         start_date: 'DESC',
       },
     });
-    return ProductPricingMapper.toDomain(entity[0]);
+    const entity = entities[0];
+    // change price of entiy from the discount from the disount table
+    // const discount = await this.discountRepository.findOne({
+    //   where: {
+    //     product_id: product_id,
+    //     start_date: LessThanOrEqual(startDate),
+    //   },
+    // });
+    return ProductPricingMapper.toDomain(entity);
   }
 
   async save(productPricing: ProductPricing): Promise<ProductPricing> {
