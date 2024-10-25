@@ -8,7 +8,7 @@ export class UpdateIsActiveCron {
     private readonly productPricingRepository: IProductPricingRepository,
   ) {}
 
-  @Cron(CronExpression.EVERY_SECOND)
+  @Cron(CronExpression.EVERY_12_HOURS)
   async handleCron() {
     const currentDate = new Date();
     await this.productPricingRepository.updateIsActive(currentDate);

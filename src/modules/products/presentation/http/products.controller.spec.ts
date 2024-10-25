@@ -53,7 +53,7 @@ describe('ProductController', () => {
 
       expect(await controller.findAll()).toBe(result);
     });
-  });
+  }); 
 
   describe('findOne', () => {
     it('should return a single product', async () => {

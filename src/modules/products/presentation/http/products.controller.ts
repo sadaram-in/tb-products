@@ -18,7 +18,7 @@ import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.inte
 @UseInterceptors(LoggingInterceptor)
 @Controller({
   path: 'products',
-  version: '1', // Ensure versioning is handled
+  version: '1',
 })
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
