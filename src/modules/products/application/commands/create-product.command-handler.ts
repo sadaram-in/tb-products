@@ -25,10 +25,12 @@ export class CreateProductCommandHandler
       golden_id: command.golden_id,
       name: command.name,
       description: command.description,
-      change_log: command.change_log,
+      change_log: [],
       start_date: command.start_date,
       end_date: command.end_date,
       is_active: command.is_active,
+      created_at: new Date(Date.now()),
+      updated_at: new Date(Date.now()),
     });
 
     // Save the product entity using the repository

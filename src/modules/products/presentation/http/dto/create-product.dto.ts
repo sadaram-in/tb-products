@@ -8,8 +8,9 @@ import {
   IsUUID,
   Length,
 } from 'class-validator';
+import { BaseDto } from 'src/shared/dto/base-dto';
 
-export class CreateProductDto {
+export class CreateProductDto extends BaseDto {
   @ApiProperty()
   @IsUUID()
   golden_id: string;
@@ -26,6 +27,7 @@ export class CreateProductDto {
 
   @ApiProperty()
   @IsArray()
+  @IsOptional()
   change_log: Record<string, any>;
 
   @ApiProperty()

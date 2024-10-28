@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateProductDto } from './create-product.dto';
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsDateString, IsOptional } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsBoolean, IsDate, IsDateString, IsOptional } from 'class-validator';
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {
   @ApiPropertyOptional()
@@ -16,6 +16,10 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
 
   @ApiPropertyOptional({ nullable: true })
   @IsOptional()
-  @IsDateString()
+  @IsDate()
   end_date?: Date | null;
+
+  @ApiProperty()
+  @IsDate()
+  updated_at: Date;
 }

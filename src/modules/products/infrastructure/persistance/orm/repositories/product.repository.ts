@@ -26,11 +26,11 @@ export class ProductRepository implements IProductRepository {
   }
 
   async save(product: Product): Promise<Product> {
-    // console.log(product);
+    console.log(product);
     const persistenceModel = ProductMapper.toPersistence(product);
-    // console.log(persistenceModel);
+    console.log(persistenceModel);
     const newEntity = await this.productRepository.save(persistenceModel);
-    // console.log(newEntity);
+    console.log(newEntity);
     return ProductMapper.toDomain(newEntity);
   }
  

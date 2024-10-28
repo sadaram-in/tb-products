@@ -11,6 +11,8 @@ export class ProductMapper {
       productEntity.start_date,
       productEntity.end_date,
       productEntity.is_active,
+      productEntity.created_at,
+      productEntity.updated_at,
     );
     return productModel;
   }
@@ -25,6 +27,8 @@ export class ProductMapper {
     entity.start_date = product.start_date;
     entity.end_date = product.end_date;
     entity.is_active = product.is_active;
+    entity.created_at = product.created_at;
+    entity.updated_at = product.updated_at;
     return entity;
   }
 }

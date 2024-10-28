@@ -31,10 +31,11 @@ export class UpdateProductCommandHandler
     productToUpdate.golden_id = golden_id;
     productToUpdate.name = name;
     productToUpdate.description = description;
-    productToUpdate.change_log = change_log;
+    productToUpdate.change_log = [];
     productToUpdate.start_date = start_date;
     productToUpdate.end_date = end_date;
     productToUpdate.is_active = is_active;
+    productToUpdate.updated_at = new Date(Date.now());
     // console.log(productToUpdate);
     // Save the updated product
     return await this.productRepository.save(productToUpdate);
