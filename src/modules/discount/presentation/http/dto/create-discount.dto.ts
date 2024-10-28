@@ -6,8 +6,9 @@ import {
   IsUUID,
   Length,
 } from 'class-validator';
+import { BaseDto } from 'src/shared/dto/base-dto';
 
-export class CreateDiscountDto {
+export class CreateDiscountDto extends BaseDto {
   @ApiProperty()
   @IsString()
   @Length(1, 30)

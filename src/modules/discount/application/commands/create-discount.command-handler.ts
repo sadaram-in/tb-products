@@ -26,6 +26,8 @@ export class CreateDiscountCommandHandler
       percentage: command.percentage,
       start_date: command.start_date,
       end_date: command.end_date,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
 
     // Save the product entity using the repository
