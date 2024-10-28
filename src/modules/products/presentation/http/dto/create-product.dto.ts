@@ -8,7 +8,7 @@ import {
   IsUUID,
   Length,
 } from 'class-validator';
-import { BaseDto } from 'src/shared/dto/base-dto';
+import { BaseDto } from 'src/shared/dto/base.dto';
 
 export class CreateProductDto extends BaseDto {
   @ApiProperty()
