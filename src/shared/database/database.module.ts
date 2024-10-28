@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DiscountTypeEntity } from 'src/modules/discount-type/infrastructure/persistance/orm/entities/discount-type.entities';
 import { DiscountEntity } from 'src/modules/discount/infrastructure/persistance/orm/entities/discount.entities';
 import { ProductPricingEntity } from 'src/modules/product-pricing/infrastructure/persistance/orm/entities/product-pricing.entities';
 import { ProductEntity } from 'src/modules/products/infrastructure/persistance/orm/entities/product.entities';
@@ -21,7 +22,7 @@ import { ProductEntity } from 'src/modules/products/infrastructure/persistance/o
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
         url: configService.get<string>('DATABASE_URL'),
-        entities: [ProductEntity, ProductPricingEntity, DiscountEntity],
+        entities: [ProductEntity, ProductPricingEntity, DiscountEntity, DiscountTypeEntity],
         synchronize: false,
       }),
     }),
