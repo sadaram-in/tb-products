@@ -33,6 +33,8 @@ export class CreateProductPricingCommandHandler
       end_date: command.end_date,
       eol_date: command.eol_date,
       term: command.term,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
 
     return this.productPricingRepository.save(productPricing);

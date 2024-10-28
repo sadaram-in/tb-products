@@ -9,5 +9,7 @@ export class ProductPricing {
     public end_date: Date | null,
     public eol_date: Date | null,
     public term: string | null,
+    public created_at: Date,
+    public updated_at: Date,
   ) {}
 }

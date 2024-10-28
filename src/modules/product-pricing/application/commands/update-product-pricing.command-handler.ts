@@ -63,6 +63,8 @@ export class UpdateProductPricingCommandHandler
           is_active: true,
           eol_date: pricing.eol_date,
           term: pricing.term,
+          created_at: new Date(),
+          updated_at: new Date(),
         });
         console.log('leftPricing', leftPricing);
         await this.productPricingRepository.save(leftPricing);
@@ -76,6 +78,8 @@ export class UpdateProductPricingCommandHandler
           is_active: true,
           eol_date: pricing.eol_date,
           term: pricing.term,
+          created_at: new Date(),
+          updated_at: new Date(),
         });
         console.log('rightPricing', rightPricing);
         await this.productPricingRepository.save(rightPricing);
@@ -91,6 +95,8 @@ export class UpdateProductPricingCommandHandler
           is_active: true,
           eol_date,
           term,
+          created_at: new Date(),
+          updated_at: new Date(),
         });
         return await this.productPricingRepository.save(newPricing);
       }
@@ -111,6 +117,8 @@ export class UpdateProductPricingCommandHandler
         is_active: true,
         eol_date,
         term,
+        created_at: new Date(),
+        updated_at: new Date(),
       });
       return await this.productPricingRepository.save(newPricing);
     }
@@ -130,7 +138,10 @@ export class UpdateProductPricingCommandHandler
         is_active: true,
         eol_date,
         term,
+        created_at: new Date(),
+        updated_at: new Date(),
       });
+
       return await this.productPricingRepository.save(newPricing);
     }
 
@@ -171,6 +182,8 @@ export class UpdateProductPricingCommandHandler
       is_active: true,
       eol_date,
       term,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
     return await this.productPricingRepository.save(newPricing);
   }
