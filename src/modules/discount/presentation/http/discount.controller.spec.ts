@@ -80,6 +80,8 @@ describe('DiscountController', () => {
         percentage: 10,
         start_date: new Date(),
         end_date: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       };
       const result: ApiResponseDto<any> = {
         status: 'success',

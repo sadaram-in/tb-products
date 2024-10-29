@@ -28,7 +28,15 @@ enum ResponseCodesDiscount {
   BAD_REQUEST = 'DIS-004',
 }
 
+enum ResponseCodesDiscountType {
+  SUCCESS = 'DT-001',
+  NOT_FOUND = 'DT-002',
+  INTERNAL_SERVER_ERROR = 'DT-003',
+  BAD_REQUEST = 'DT-004',
+}
+
 export const statusCodes = StatusCodes;
 export const responseCodesPR = ResponseCodesPR;
 export const responseCodesPRP = ResponseCodesPRP;
 export const responseCodesDiscount = ResponseCodesDiscount;
+export const responseCodesDiscountType = ResponseCodesDiscountType;

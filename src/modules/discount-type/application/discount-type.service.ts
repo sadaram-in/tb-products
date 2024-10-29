@@ -8,8 +8,7 @@ import { DeleteDiscountTypeCommand } from './commands/delete-discount-type.comma
 import { ResponseService } from 'src/shared/response/response.service';
 import { ApiResponseDto } from 'src/shared/response/dto/api-response.dto';
 import {
-  responseCodesDiscount,
-  responseCodesPR,
+  responseCodesDiscountType,
   statusCodes,
 } from 'src/shared/constants/constants';
 
@@ -29,7 +28,7 @@ export class DiscountTypeService {
       'success',
       result,
       statusCodes.CREATED,
-      responseCodesPR.SUCCESS,
+      responseCodesDiscountType.SUCCESS,
     );
   }
 
@@ -39,7 +38,7 @@ export class DiscountTypeService {
       'success',
       discounts,
       statusCodes.SUCCESS,
-      responseCodesDiscount.SUCCESS,
+      responseCodesDiscountType.SUCCESS,
     );
   }
 
@@ -51,7 +50,7 @@ export class DiscountTypeService {
           message: 'Discount ID is required',
         },
         statusCodes.NOT_FOUND,
-        responseCodesDiscount.NOT_FOUND,
+        responseCodesDiscountType.NOT_FOUND,
       );
     }
     const discount = await this.queryBus.execute(new GetDiscountTypeByIdQuery(id));
@@ -63,14 +62,14 @@ export class DiscountTypeService {
           id,
         },
         statusCodes.NOT_FOUND,
-        responseCodesDiscount.NOT_FOUND,
+        responseCodesDiscountType.NOT_FOUND,
       );
     }
     return this.responseService.buildErrorResponse(
       'success',
       discount,
       statusCodes.SUCCESS,
-      responseCodesDiscount.SUCCESS,
+      responseCodesDiscountType.SUCCESS,
     );
   }
 
@@ -86,7 +85,7 @@ export class DiscountTypeService {
           message: `Discount with ID ${id} not found`,
         },
         statusCodes.NOT_FOUND,
-        responseCodesDiscount.NOT_FOUND,
+        responseCodesDiscountType.NOT_FOUND,
       );
     }
     const updatedDiscount = await this.commandBus.execute(
@@ -96,7 +95,7 @@ export class DiscountTypeService {
       'success',
       updatedDiscount,
       statusCodes.CREATED,
-      responseCodesDiscount.SUCCESS,
+      responseCodesDiscountType.SUCCESS,
     );
   }
 
@@ -109,7 +108,7 @@ export class DiscountTypeService {
           message: `Discount with ID ${id} not found`,
         },
         statusCodes.NOT_FOUND,
-        responseCodesDiscount.NOT_FOUND,
+        responseCodesDiscountType.NOT_FOUND,
       );
     }
     await this.commandBus.execute(new DeleteDiscountTypeCommand(id));
@@ -119,7 +118,7 @@ export class DiscountTypeService {
         message: 'Discount deleted successfully',
       },
       statusCodes.SUCCESS,
-      responseCodesDiscount.SUCCESS,
+      responseCodesDiscountType.SUCCESS,
     );
   }
 }
