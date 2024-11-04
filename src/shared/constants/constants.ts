@@ -21,9 +21,14 @@ enum ResponseCodesPRP {
   BAD_REQUEST = 'PRP-004',
 }
 
-
+enum ResponseCodesProductTerm {
+  SUCCESS = 'PT-001',
+  NOT_FOUND = 'PT-002',
+  INTERNAL_SERVER_ERROR = 'PT-003',
+  BAD_REQUEST = 'PT-004',
+}
 
 export const statusCodes = StatusCodes;
 export const responseCodesPR = ResponseCodesPR;
 export const responseCodesPRP = ResponseCodesPRP;
-
+export const responseCodesProductTerm = ResponseCodesProductTerm;

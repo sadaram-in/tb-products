@@ -10,6 +10,7 @@ import { ProductsModule } from './modules/products/application/products.module';
 import { ProductPricingModule } from './modules/product-pricing/application/product-pricing.module';
 import { DatabaseModule } from './shared/database/database.module';
 import { ResponseService } from './shared/response/response.service';
+import { ProductTermModule } from './modules/product-term/application/product-term.module';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ResponseService } from './shared/response/response.service';
     DatabaseModule,
     ProductsModule,
     ProductPricingModule,
-    
+    ProductTermModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
