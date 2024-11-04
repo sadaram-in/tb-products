@@ -6,6 +6,6 @@ export class UpdateProductPricingCommand {
     public readonly start_date: Date,
     public readonly end_date: Date,
     public readonly eol_date: Date,
-    public readonly term: string,
+    public readonly term_id: string,
   ) {}
 }

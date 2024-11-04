@@ -32,7 +32,7 @@ export class CreateProductPricingCommandHandler
       start_date: command.start_date,
       end_date: command.end_date,
       eol_date: command.eol_date,
-      term: command.term,
+      term_id: command.term_id,
       created_at: new Date(),
       updated_at: new Date(),
     });

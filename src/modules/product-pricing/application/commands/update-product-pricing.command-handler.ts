@@ -21,7 +21,7 @@ export class UpdateProductPricingCommandHandler
       start_date,
       end_date,
       eol_date,
-      term,
+      term_id,
     } = command;
 
     const getPreviousDay = (date: Date): Date => {
@@ -62,7 +62,7 @@ export class UpdateProductPricingCommandHandler
           end_date: getPreviousDay(start_date),
           is_active: true,
           eol_date: pricing.eol_date,
-          term: pricing.term,
+          term_id: pricing.term_id,
           created_at: new Date(),
           updated_at: new Date(),
         });
@@ -77,7 +77,7 @@ export class UpdateProductPricingCommandHandler
           end_date: pricing.end_date,
           is_active: true,
           eol_date: pricing.eol_date,
-          term: pricing.term,
+          term_id: pricing.term_id,
           created_at: new Date(),
           updated_at: new Date(),
         });
@@ -94,7 +94,7 @@ export class UpdateProductPricingCommandHandler
           end_date,
           is_active: true,
           eol_date,
-          term,
+          term_id,
           created_at: new Date(),
           updated_at: new Date(),
         });
@@ -116,7 +116,7 @@ export class UpdateProductPricingCommandHandler
         end_date: getPreviousDay(affectedPricings[0].start_date),
         is_active: true,
         eol_date,
-        term,
+        term_id,
         created_at: new Date(),
         updated_at: new Date(),
       });
@@ -137,7 +137,7 @@ export class UpdateProductPricingCommandHandler
         end_date,
         is_active: true,
         eol_date,
-        term,
+        term_id,
         created_at: new Date(),
         updated_at: new Date(),
       });
@@ -181,7 +181,7 @@ export class UpdateProductPricingCommandHandler
       end_date,
       is_active: true,
       eol_date,
-      term,
+      term_id,
       created_at: new Date(),
       updated_at: new Date(),
     });

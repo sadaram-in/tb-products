@@ -44,6 +44,6 @@ export class CreateProductPricingDto extends BaseDto {
 
   @ApiProperty({ nullable: true })
   @IsOptional()
-  @IsString()
-  term: string | null;
+  @IsUUID()
+  term_id: string;
 }

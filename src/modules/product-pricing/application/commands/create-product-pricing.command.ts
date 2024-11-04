@@ -7,6 +7,6 @@ export class CreateProductPricingCommand {
     public readonly start_date: Date,
     public readonly end_date: Date | null,
     public readonly eol_date: Date | null,
-    public readonly term: string | null,
+    public readonly term_id: string,
   ) {}
 }

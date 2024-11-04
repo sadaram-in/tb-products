@@ -60,7 +60,7 @@ export class ProductPricingController {
         createProductPricingDto.start_date,
         createProductPricingDto.end_date || new Date(9999, 11, 31),
         createProductPricingDto.eol_date || new Date(9999, 11, 31),
-        createProductPricingDto.term || null,
+        createProductPricingDto.term_id,
       ),
     );
   }
@@ -77,7 +77,7 @@ export class ProductPricingController {
       updateProductPricingDto.start_date,
       updateProductPricingDto.end_date || new Date(9999, 11, 31),
       updateProductPricingDto.eol_date || new Date(9999, 11, 31),
-      updateProductPricingDto.term || null,
+      updateProductPricingDto.term_id,
     );
     return this.productPricingService.update(updateProductPricingCommand);
   }

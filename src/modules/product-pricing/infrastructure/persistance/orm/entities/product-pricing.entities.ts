@@ -9,6 +9,8 @@ import {
   Unique,
 } from 'typeorm';
 import { ProductEntity } from 'src/modules/products/infrastructure/persistance/orm/entities/product.entities';
+import { ProductTermEntity } from 'src/modules/product-term/infrastructure/persistance/orm/entities/product-term.entities';
+import { ProductTermType } from 'src/shared/constants/product-term-types';
 
 @Entity('product_pricing')
 export class ProductPricingEntity {
@@ -40,8 +42,12 @@ export class ProductPricingEntity {
   @Column({ type: 'date', nullable: true })
   eol_date: Date;
 
-  @Column({ type: 'enum', enum: ['monthly', 'yearly'], nullable: true })
-  term: string;
+  @ManyToOne(() => ProductTermEntity, (productTerm) => productTerm.id, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'term_id' })
+  @Column({ type: 'uuid', nullable: true })
+  term_id: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

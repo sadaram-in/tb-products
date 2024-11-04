@@ -13,7 +13,7 @@ export class ProductPricingFactory {
       start_date,
       end_date,
       eol_date,
-      term,
+      term_id,
     } = createProductPricingDto;
 
     const productPricing = new ProductPricingEntity();
@@ -24,7 +24,7 @@ export class ProductPricingFactory {
     productPricing.start_date = start_date;
     productPricing.end_date = end_date;
     productPricing.eol_date = eol_date;
-    productPricing.term = term;
+    productPricing.term_id = term_id;
 
     return productPricing;
   }

@@ -13,7 +13,7 @@ export class ProductPricingMapper {
       entity.start_date,
       entity.end_date,
       entity.eol_date,
-      entity.term,
+      entity.term_id,
       entity.created_at,
       entity.updated_at,
     );
@@ -30,7 +30,7 @@ export class ProductPricingMapper {
     entity.start_date = domain.start_date;
     entity.end_date = domain.end_date || new Date('9999-12-31');
     entity.eol_date = domain.eol_date || new Date('9999-12-31');
-    entity.term = domain.term || null;
+    entity.term_id = domain.term_id ;
     entity.created_at = domain.created_at;
     entity.updated_at = domain.updated_at;
     return entity;
