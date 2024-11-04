@@ -38,7 +38,7 @@ export class ProductPricingController {
     );
   }
 
-  @Get('/:id')
+  @Get(':id')
   async findById(@Param('id') id: string) {
     return this.productPricingService.findById(id);
   }

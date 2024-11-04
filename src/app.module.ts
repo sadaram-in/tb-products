@@ -10,8 +10,6 @@ import { ProductsModule } from './modules/products/application/products.module';
 import { ProductPricingModule } from './modules/product-pricing/application/product-pricing.module';
 import { DatabaseModule } from './shared/database/database.module';
 import { ResponseService } from './shared/response/response.service';
-import { DiscountModule } from './modules/discount/application/discount.module';
-import { DiscountTypeModule } from './modules/discount-type/application/discount-type.module';
 
 @Module({
   imports: [
@@ -20,8 +18,7 @@ import { DiscountTypeModule } from './modules/discount-type/application/discount
     DatabaseModule,
     ProductsModule,
     ProductPricingModule,
-    DiscountModule,
-    DiscountTypeModule,
+    
     ConfigModule.forRoot({
       isGlobal: true,
     }),

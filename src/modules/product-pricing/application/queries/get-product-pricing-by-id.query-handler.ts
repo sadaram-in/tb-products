@@ -1,4 +1,3 @@
-
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetProductPricingByIdQuery } from './get-product-pricing-by-id.query';
 import { IProductPricingRepository } from '../../domain/ports/product-pricing.repository';
@@ -12,14 +11,15 @@ export class GetProductPricingByIdQueryHandler
     private readonly productPricingRepository: IProductPricingRepository,
   ) {}
   async execute(query: GetProductPricingByIdQuery): Promise<ProductPricing> {
+    console.log('2342342', query.id);
     const productPricing = await this.productPricingRepository.findOneById(
       query.id,
     );
-
+    
+    console.log(productPricing);
     if (!productPricing) {
       throw new Error(`Product pricing with ID ${query.id} not found`);
     }
-
     return productPricing;
   }
 }

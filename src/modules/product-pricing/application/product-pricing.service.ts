@@ -79,9 +79,11 @@ export class ProductPricingService {
   }
 
   async remove(id: string): Promise<ApiResponseDto<any>> {
+    console.log('2342342', id);
     const pricing = await this.queryBus.execute(
       new GetProductPricingByIdQuery(id),
     );
+    console.log(pricing);
     if (!pricing) {
       return this.responseService.handleNotFound(
         'error',

@@ -61,6 +61,7 @@ export class ProductPricingRepository implements IProductPricingRepository {
   }
 
   async findOneById(id: string): Promise<ProductPricing> {
+
     const entity = await this.productPricingRepository.findOne({
       where: { id },
     });
