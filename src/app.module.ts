@@ -4,30 +4,28 @@ import { AppService } from './app.service';
 import { HealthModule } from './shared/health/health.module';
 import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule } from '@nestjs/config';
+import { CoreModule } from './core/core.module';
+import { CqrsModule } from '@nestjs/cqrs';
+import { ProductsModule } from './modules/products/application/products.module';
+import { ProductPricingModule } from './modules/product-pricing/application/product-pricing.module';
 import { DatabaseModule } from './shared/database/database.module';
-import { ProductsModule } from './product/product.module';
-import { ProductPricingModule } from './product-pricing/product-pricing.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './auth/roles.guard';
+import { ResponseService } from './shared/response/response.service';
 
 @Module({
   imports: [
+    CqrsModule.forRoot(),
     HealthModule,
     DatabaseModule,
+    ProductsModule,
+    ProductPricingModule,
+    
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     LoggerModule.forRoot(),
-    ProductPricingModule,
-    ProductsModule,
+    CoreModule.forRootAsync(),
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+  providers: [AppService, ResponseService],
 })
 export class AppModule {}

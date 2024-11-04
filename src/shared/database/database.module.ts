@@ -1,26 +1,28 @@
-// src/database/database.module.ts
-
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductPricing } from 'src/product-pricing/product-pricing.entity';
-import { Products } from 'src/product/product.entity';
-
-import * as dotenv from 'dotenv';
-dotenv.config();
-
+import { ProductPricingEntity } from 'src/modules/product-pricing/infrastructure/persistance/orm/entities/product-pricing.entities';
+import { ProductEntity } from 'src/modules/products/infrastructure/persistance/orm/entities/product.entities';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: (process.env.DB_TYPE as any) || 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT) || 5432,
-      database: process.env.DB_NAME || 'postgres',
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-      // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-      entities: [Products, ProductPricing],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: configService.get<string>('DATABASE_TYPE') as 'postgres',
+        host: configService.get<string>('DATABASE_HOST'),
+        port: configService.get<number>('DATABASE_PORT'),
+        username: configService.get<string>('DATABASE_USER'),
+        password: configService.get<string>('DATABASE_PASSWORD'),
+        database: configService.get<string>('DATABASE_NAME'),
+        url: configService.get<string>('DATABASE_URL'),
+        entities: [ProductEntity, ProductPricingEntity],
+        synchronize: false,
+      }),
     }),
   ],
 })
