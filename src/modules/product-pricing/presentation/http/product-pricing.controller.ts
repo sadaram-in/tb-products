@@ -16,11 +16,13 @@ import { CreateProductPricingDto } from './dto/create-product-pricing.dto';
 import { UpdateProductPricingDto } from './dto/update-product-pricing.dto';
 import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
 import { GetProductPricingDto } from './dto/get-product-pricing.dto';
+import { ConfigService } from '@nestjs/config';
 
+const configService = new ConfigService();
 @UseInterceptors(LoggingInterceptor)
 @Controller({
   path: 'product-pricing',
-  version: '1',
+  version: configService.get('API_VERSION'),
 })
 export class ProductPricingController {
   constructor(private readonly productPricingService: ProductPricingService) {}

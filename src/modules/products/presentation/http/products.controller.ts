@@ -14,11 +14,13 @@ import { UpdateProductCommand } from '../../application/commands/update-product.
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
+import { ConfigService } from '@nestjs/config';
 
+const configService = new ConfigService();
 @UseInterceptors(LoggingInterceptor)
 @Controller({
   path: 'products',
-  version: '1',
+  version: configService.get('API_VERSION'),
 })
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
