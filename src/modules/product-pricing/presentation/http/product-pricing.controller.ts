@@ -28,16 +28,13 @@ export class ProductPricingController {
   constructor(private readonly productPricingService: ProductPricingService) {}
 
   // GET a single ProductPricing by ID
-  @Post(':product_id')
+  @Get('/product_id/:product_id/start_date/:start_date')
   async findOne(
     @Param('product_id') product_id: string,
-    @Body() getProductPricingDto: GetProductPricingDto,
+    @Param('start_date') start_date: Date,
   ) {
     // console.log(product_id, getProductPricingDto.start_date);
-    return this.productPricingService.findOne(
-      product_id,
-      getProductPricingDto.start_date,
-    );
+    return this.productPricingService.findOne(product_id, start_date);
   }
 
   @Get(':id')
