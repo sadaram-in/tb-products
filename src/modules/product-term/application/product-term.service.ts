@@ -53,10 +53,10 @@ export class ProductTermService {
         responseCodesProductTerm.NOT_FOUND,
       );
     }
-    const discount = await this.queryBus.execute(
+    const productTerm = await this.queryBus.execute(
       new GetProductTermByIdQuery(id),
     );
-    if (discount === null) {
+    if (productTerm === null) {
       return this.responseService.handleNotFound(
         'error',
         {
@@ -69,7 +69,7 @@ export class ProductTermService {
     }
     return this.responseService.buildErrorResponse(
       'success',
-      discount,
+      productTerm,
       statusCodes.SUCCESS,
       responseCodesProductTerm.SUCCESS,
     );
@@ -79,10 +79,10 @@ export class ProductTermService {
     id: string,
     updateProductTermCommand: UpdateProductTermCommand,
   ): Promise<ApiResponseDto<any>> {
-    const discount = await this.queryBus.execute(
+    const productTerm = await this.queryBus.execute(
       new GetProductTermByIdQuery(id),
     );
-    if (!discount) {
+    if (!productTerm) {
       return this.responseService.handleNotFound(
         'error',
         {
@@ -92,22 +92,22 @@ export class ProductTermService {
         responseCodesProductTerm.NOT_FOUND,
       );
     }
-    const updatedDiscount = await this.commandBus.execute(
+    const updatedProductTerm = await this.commandBus.execute(
       updateProductTermCommand,
     );
     return this.responseService.buildErrorResponse(
       'success',
-      updatedDiscount,
+      updatedProductTerm,
       statusCodes.CREATED,
       responseCodesProductTerm.SUCCESS,
     );
   }
 
   async remove(id: string): Promise<ApiResponseDto<any>> {
-    const discount = await this.queryBus.execute(
+    const productTerm = await this.queryBus.execute(
       new GetProductTermByIdQuery(id),
     );
-    if (!discount) {
+    if (!productTerm) {
       return this.responseService.handleNotFound(
         'error',
         {
@@ -121,7 +121,7 @@ export class ProductTermService {
     return this.responseService.buildErrorResponse(
       'success',
       {
-        message: 'Discount deleted successfully',
+        message: 'Product Term deleted successfully',
       },
       statusCodes.SUCCESS,
       responseCodesProductTerm.SUCCESS,

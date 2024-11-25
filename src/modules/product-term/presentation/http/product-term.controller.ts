@@ -13,7 +13,7 @@ import { CreateProductTermCommand } from '../../application/commands/create-prod
 import { UpdateProductTermCommand } from '../../application/commands/update-product-term.command';
 import { CreateProductTermDto } from './dto/create-product-term.dto';
 import { UpdateProductTermDto } from './dto/update-product-term.dto';
-import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
+import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 import { ConfigService } from '@nestjs/config';
 
 const configService = new ConfigService();
