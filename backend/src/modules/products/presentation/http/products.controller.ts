@@ -13,7 +13,7 @@ import { CreateProductCommand } from '../../application/commands/create-product.
 import { UpdateProductCommand } from '../../application/commands/update-product.command';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
+import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 

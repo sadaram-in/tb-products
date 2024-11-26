@@ -14,7 +14,7 @@ import { CreateProductPricingCommand } from '../../application/commands/create-p
 import { UpdateProductPricingCommand } from '../../application/commands/update-product-pricing.command';
 import { CreateProductPricingDto } from './dto/create-product-pricing.dto';
 import { UpdateProductPricingDto } from './dto/update-product-pricing.dto';
-import { LoggingInterceptor } from 'src/shared/interceptors/logging/logging.interceptor';
+import { LoggingInterceptor } from 'src/shared/interceptors/logging.interceptor';
 import { GetProductPricingDto } from './dto/get-product-pricing.dto';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
