@@ -4,9 +4,19 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as basicAuth from 'express-basic-auth';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  app.use(
+    ['/api'],
+    basicAuth({
+      challenge: true,
+      users: {
+        admin: 'tbtextbuztb',
+      },
+    }),
+  );
   app.useGlobalPipes(new ValidationPipe());
   app.useLogger(app.get(Logger));
   app.enableVersioning({

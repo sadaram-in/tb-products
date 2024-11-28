@@ -17,24 +17,31 @@ export class HealthController {
   @Get('/liveness')
   @HealthCheck()
   checkLiveness() {
-    const port = this.configService.get('PORT');
+    const LIVENESS_CHECK_URL = this.configService.get('LIVENESS_CHECK_URL');
     return this.health.check([
       () =>
         this.http.pingCheck(
           this.configService.get('APP_NAME'),
-          `http://localhost:${port}`,
+          LIVENESS_CHECK_URL,
         ),
     ]);
   }
+
   @Get('/readiness')
   @HealthCheck()
   checkReadiness() {
-    const port = this.configService.get('PORT');
+    const READINESS_CHECK_URL = this.configService.get('READINESS_CHECK_URL');
+    console.log(
+      `Health check on port ${this.configService.get('PORT')}`,
+    );
     return this.health.check([
       () =>
-        this.http.pingCheck(
+        this.http.responseCheck(
           this.configService.get('APP_NAME'),
-          `http://localhost:${port}`,
+          `${READINESS_CHECK_URL}`,
+          (res) => {
+            return res.status === 200;
+          },
         ),
     ]);
   }

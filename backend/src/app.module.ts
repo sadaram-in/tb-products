@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { HealthModule } from './shared/health/health.module';
 import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule } from '@nestjs/config';
-import { CoreModule } from './core/core.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ProductsModule } from './modules/products/application/products.module';
 import { ProductPricingModule } from './modules/product-pricing/application/product-pricing.module';
@@ -24,7 +23,6 @@ import { ProductTermModule } from './modules/product-term/application/product-te
       isGlobal: true,
     }),
     LoggerModule.forRoot(),
-    CoreModule.forRootAsync(),
   ],
   controllers: [AppController],
   providers: [AppService, ResponseService],

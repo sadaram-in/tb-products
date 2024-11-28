@@ -22,6 +22,9 @@ import { ProductTermEntity } from 'src/modules/product-term/infrastructure/persi
         url: configService.get<string>('DATABASE_URL'),
         entities: [ProductEntity, ProductPricingEntity, ProductTermEntity],
         synchronize: false,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
     }),
   ],
