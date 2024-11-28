@@ -5,7 +5,7 @@ import { createLogger } from './shared/loggers/pino.logger';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('App')
-@Controller({ version: VERSION_NEUTRAL })
+@Controller()
 export class AppController {
   private readonly logger = createLogger(AppController.name);
   constructor(private readonly appService: AppService) {}

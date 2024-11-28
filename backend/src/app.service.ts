@@ -8,13 +8,8 @@ import { CreateDummyDto } from './create-dummy.dto';
 export class AppService {
   constructor(private readonly responseService: ResponseService) {}
 
-  getHello(): ApiResponseDto<any> {
-    return this.responseService.buildErrorResponse(
-      'Success',
-      { message: 'Products API' },
-      statusCodes.SUCCESS,
-      'Test-OK',
-    );
+  getHello(): string {
+    return 'Hello World!';
   }
 
   postHello(createDummyDto: CreateDummyDto): ApiResponseDto<any> {
