@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   # Update this to the name of the service you want to work with in your docker-compose.yml file
   api:
@@ -12,7 +12,7 @@ services:
     #   context: .
     #   dockerfile: .devcontainer/Dockerfile
     ports:
-      - 8080:8080
+      - 3000:3000
 
     environment:
       NODE_ENV: development
