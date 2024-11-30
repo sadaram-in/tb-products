@@ -8,7 +8,7 @@ import pino from 'pino';
 
 const transport = pino.transport({
   target: 'pino/file',
-  options: { destination: 'logs/app.log' },
+  options: { destination: 'app.log' },
 });
 
 const logger = pino(
