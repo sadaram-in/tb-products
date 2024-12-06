@@ -1,30 +1,42 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { HealthModule } from './shared/health/health.module';
-import { LoggerModule } from 'nestjs-pino';
-import { ConfigModule } from '@nestjs/config';
+import { HealthModule } from './utils/health/health.module';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ProductsModule } from './modules/products/application/products.module';
-import { ProductPricingModule } from './modules/product-pricing/application/product-pricing.module';
-import { DatabaseModule } from './shared/database/database.module';
-import { ResponseService } from './shared/response/response.service';
-import { ProductTermModule } from './modules/product-term/application/product-term.module';
+import { ProductModule } from './products/product.module';
+import { LoggingInterceptor } from './utils/logging/logging.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AppConfigModule } from './config/config.module';
+import { AppConfigService } from './config/config.service';
+import { LoggingModule } from './utils/logging/logging.module';
 
 @Module({
   imports: [
+    AppConfigModule,
+    LoggingModule,
     CqrsModule.forRoot(),
     HealthModule,
-    DatabaseModule,
-    ProductsModule,
-    ProductPricingModule,
-    ProductTermModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
+    TypeOrmModule.forRootAsync({
+      imports: [AppConfigModule],
+      useFactory: (configService: AppConfigService) => ({
+        ...configService.databaseConfig,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: false,
+      }),
+      inject: [AppConfigService],
     }),
-    LoggerModule.forRoot(),
+    ProductModule,
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+    AppService,
   ],
   controllers: [AppController],
-  providers: [AppService, ResponseService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {}
+}
