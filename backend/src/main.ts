@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { Logger } from 'nestjs-pino';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as basicAuth from 'express-basic-auth';
 async function bootstrap() {
@@ -18,7 +17,6 @@ async function bootstrap() {
     }),
   );
   app.useGlobalPipes(new ValidationPipe());
-  app.useLogger(app.get(Logger));
   app.enableVersioning({
     type: VersioningType.URI,
     defaultVersion: configService.get('API_VERSION'),
@@ -30,14 +28,12 @@ async function bootstrap() {
     .setDescription(configService.get('APP_DESCRIPTION'))
     .setVersion(configService.get('API_VERSION'))
     .addTag('App', 'App management endpoints')
-    .addTag('Products', 'Product management endpoints')
-    .addTag('Pricing', 'Pricing management endpoints')
-    .addTag('Product Term', 'Product Term management endpoints')
+    .addTag('Products', 'Product management')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('v1.0/api', app, document);
   const port = configService.get('PORT') || 3000;
-  console.log(`Products and Pricing server is running on port ${port}`);
+  console.log(`Products api is running on port ${port}`);
   await app.listen(port);
 }
 
