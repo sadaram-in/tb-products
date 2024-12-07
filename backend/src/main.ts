@@ -7,12 +7,16 @@ import * as basicAuth from 'express-basic-auth';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const swaggerProtection = {
+    route: configService.get('SWAGGER_ROUTE'),
+    password: configService.get('SWAGGER_PASSWORD'),
+  };
   app.use(
-    ['/api'],
+    [swaggerProtection.route],
     basicAuth({
       challenge: true,
       users: {
-        admin: 'tbtextbuztb',
+        admin: swaggerProtection.password,
       },
     }),
   );
@@ -31,7 +35,7 @@ async function bootstrap() {
     .addTag('Products', 'Product management')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('v1.0/api', app, document);
+  SwaggerModule.setup(swaggerProtection.route, app, document);
   const port = configService.get('PORT') || 3000;
   console.log(`Products api is running on port ${port}`);
   await app.listen(port);
