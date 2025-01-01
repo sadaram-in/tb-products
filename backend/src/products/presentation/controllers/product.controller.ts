@@ -36,6 +36,8 @@ import { CommonApiResponses } from 'src/common/decorators/common-api-responses.d
 
 @UseGuards(ExternalJwtGuard, ApiKeyGuard)
 @ApiTags('Products')
+@ApiBearerAuth('bearer')
+@ApiSecurity('x-api-key')
 @Controller('products')
 @ApiUnauthorizedResponse({
   description: 'API key is missing or invalid',
@@ -44,8 +46,6 @@ import { CommonApiResponses } from 'src/common/decorators/common-api-responses.d
   status: HttpStatus.UNAUTHORIZED,
   description: 'Unauthorized - API key or Bearer token is missing or invalid',
 })
-@ApiSecurity('x-api-key') // Requires x-api-key
-@ApiBearerAuth() // Requires Bearer token
 export class ProductController {
   constructor(
     private readonly commandBus: CommandBus,

@@ -17,6 +17,7 @@ export class ProductPricing {
     public readonly isActive: boolean,
     public readonly validFrom: Date,
     public readonly validTo: Date,
+    private deletedAt?: Date,
   ) {
     this.validatePricing();
     this.validateDates();
@@ -55,6 +56,27 @@ export class ProductPricing {
   }
 
   public isValid(date: Date = new Date()): boolean {
-    return this.isActive && date >= this.validFrom && date <= this.validTo;
+    return (
+      !this.isDeleted() &&
+      this.isActive &&
+      date >= this.validFrom &&
+      date <= this.validTo
+    );
+  }
+
+  public softDelete(): void {
+    this.deletedAt = new Date();
+  }
+
+  public restore(): void {
+    this.deletedAt = undefined;
+  }
+
+  public isDeleted(): boolean {
+    return !!this.deletedAt;
+  }
+
+  public getDeletedAt(): Date | undefined {
+    return this.deletedAt;
   }
 }

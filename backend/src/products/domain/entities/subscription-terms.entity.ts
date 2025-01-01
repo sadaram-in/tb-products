@@ -19,6 +19,7 @@ export class SubscriptionTerms {
     public readonly billingFrequency: BillingFrequency,
     public readonly eolDate: Date | null,
     public readonly description?: string,
+    private deletedAt?: Date,
   ) {
     this.validateTermPeriod();
     this.validateTrialPeriod();
@@ -37,7 +38,23 @@ export class SubscriptionTerms {
   }
 
   public isValid(date: Date = new Date()): boolean {
-    return !this.eolDate || date <= this.eolDate;
+    return !this.isDeleted() && (!this.eolDate || date <= this.eolDate);
+  }
+
+  public softDelete(): void {
+    this.deletedAt = new Date();
+  }
+
+  public restore(): void {
+    this.deletedAt = undefined;
+  }
+
+  public isDeleted(): boolean {
+    return !!this.deletedAt;
+  }
+
+  public getDeletedAt(): Date | undefined {
+    return this.deletedAt;
   }
 
   public getTermInDays(): number {

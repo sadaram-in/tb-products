@@ -11,6 +11,6 @@ export class DeleteProductHandler {
   ) {}
 
   async execute(command: DeleteProductCommand) {
-    await this.productRepository.delete(command.id);
+    await this.productRepository.softDelete(command.id);
   }
 }
