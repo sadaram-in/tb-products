@@ -10,6 +10,7 @@ import {
 } from '@nestjs/terminus';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PrometheusService } from './prometheus.service';
+import { Public } from './../../common/decorators/public.decorator';
 
 @ApiTags('Health')
 @Controller('health')
@@ -35,6 +36,7 @@ export class HealthController {
     status: 503,
     description: 'Application is not responding properly',
   })
+  @Public()
   async checkLiveness() {
     const healthCheck = await this.health.check([
       // Basic application health check
@@ -71,6 +73,7 @@ export class HealthController {
     status: 503,
     description: 'Application is not ready to accept traffic',
   })
+  @Public()
   async checkReadiness() {
     const healthCheck = await this.health.check([
       // Database health check
