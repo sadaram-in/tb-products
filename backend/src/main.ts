@@ -31,7 +31,7 @@ async function bootstrap() {
     .setTitle(configService.get('APP_NAME'))
     .setDescription(configService.get('APP_DESCRIPTION'))
     .setVersion(configService.get('API_VERSION'))
-    .addTag('App', 'App management endpoints')
+    .addTag('App', 'App endpoints')
     .addTag('Products', 'Product management')
     .addBearerAuth(
       {
