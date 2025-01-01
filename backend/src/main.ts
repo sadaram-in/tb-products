@@ -33,8 +33,19 @@ async function bootstrap() {
     .setVersion(configService.get('API_VERSION'))
     .addTag('App', 'App management endpoints')
     .addTag('Products', 'Product management')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+      },
+      'bearer',
+    )
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
+  //const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(swaggerProtection.route, app, document);
   const port = configService.get('PORT') || 3000;
   console.log(`Products api is running on port ${port}`);

@@ -6,15 +6,19 @@ import { HealthModule } from './utils/health/health.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ProductModule } from './products/product.module';
 import { LoggingInterceptor } from './utils/logging/logging.interceptor';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AppConfigModule } from './config/config.module';
 import { AppConfigService } from './config/config.service';
 import { LoggingModule } from './utils/logging/logging.module';
+import { ApiKeyGuard } from './common/guards/api-key.guard';
+import { AuthModule } from './auth/auth.module';
+import { ExternalJwtGuard } from './common/guards/external-jwt.guard';
 
 @Module({
   imports: [
     AppConfigModule,
     LoggingModule,
+    AuthModule,
     CqrsModule.forRoot(),
     HealthModule,
     TypeOrmModule.forRootAsync({
@@ -32,6 +36,14 @@ import { LoggingModule } from './utils/logging/logging.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ApiKeyGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ExternalJwtGuard,
     },
     AppService,
   ],

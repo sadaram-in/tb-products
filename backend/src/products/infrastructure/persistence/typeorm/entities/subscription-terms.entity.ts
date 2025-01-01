@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { ProductEntity } from './product.entity';
 
@@ -46,6 +47,9 @@ export class SubscriptionTermsEntity {
 
   @Column({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt?: Date;
 
   @ManyToOne(() => ProductEntity, (product) => product.subscriptionTerms)
   @JoinColumn({ name: 'product_id' })

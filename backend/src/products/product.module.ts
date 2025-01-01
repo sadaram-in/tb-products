@@ -17,6 +17,7 @@ import { DeleteProductHandler } from './application/commands/delete-product.hand
 import { ProductAuditEntity } from './infrastructure/persistence/typeorm/entities/product-audit.entity';
 import { ProductAuditRepository } from './infrastructure/persistence/typeorm/repositories/product-audit.repository';
 import { UpdateProductHandler } from './application/commands/update-product.handler';
+import { AuthModule } from 'src/auth/auth.module';
 
 const CommandHandlers = [
   CreateProductHandler,
@@ -29,6 +30,7 @@ const QueryHandlers = [GetProductsHandler, GetValidProductsHandler];
   imports: [
     CqrsModule,
     LoggingModule,
+    AuthModule,
     TypeOrmModule.forFeature([
       ProductEntity,
       ProductPricingEntity,

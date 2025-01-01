@@ -6,5 +6,6 @@ export interface ProductRepositoryPort {
   findValidProducts(date: Date): Promise<Product[]>;
   save(product: Product): Promise<Product>;
   update(id: string, product: Product): Promise<Product>;
+  softDelete(id: string): Promise<void>;
   delete(id: string): Promise<void>;
 }

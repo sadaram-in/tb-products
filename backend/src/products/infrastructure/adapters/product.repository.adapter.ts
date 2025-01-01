@@ -58,6 +58,40 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
     return this.toDomain(updated);
   }
 
+  async softDelete(id: string): Promise<void> {
+    const oldProduct = await this.findById(id);
+    if (!oldProduct) {
+      throw new Error('Product not found');
+    }
+
+    // Create a soft deleted version of the product
+    const deletedProduct = new Product(
+      oldProduct.id,
+      oldProduct.businessId,
+      oldProduct.name,
+      oldProduct.description,
+      oldProduct.metadata,
+      oldProduct.type,
+      oldProduct.startDate,
+      oldProduct.endDate,
+      oldProduct.getPricing(),
+      oldProduct.getSubscriptionTerms(),
+    );
+    deletedProduct.softDelete(); // This will set the deletedAt timestamp
+
+    const entity = this.toEntity(deletedProduct);
+    await this.repository.softDelete(id);
+
+    // Log the soft delete action
+    await this.auditRepository.logChange(
+      id,
+      'SOFT_DELETE',
+      oldProduct,
+      deletedProduct,
+      'system', // Replace with actual user ID from context
+    );
+  }
+
   async delete(id: string): Promise<void> {
     const oldProduct = await this.findById(id);
     await this.repository.delete(id);
@@ -70,6 +104,7 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
     );
   }
 
+  // Update toEntity and toDomain methods to handle deletedAt
   private toDomain(entity: any): Product {
     const pricing = entity.pricing?.map(
       (p) =>
@@ -82,6 +117,7 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
           p.isActive,
           p.validFrom,
           p.validTo,
+          p.deletedAt,
         ),
     );
 
@@ -96,10 +132,11 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
           t.billingFrequency,
           t.eolDate,
           t.description,
+          t.deletedAt,
         ),
     );
 
-    return new Product(
+    const product = new Product(
       entity.id,
       entity.businessId,
       entity.name,
@@ -110,7 +147,14 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
       entity.endDate,
       pricing,
       terms,
+      entity.deletedAt,
     );
+
+    if (entity.deletedAt) {
+      product.softDelete();
+    }
+
+    return product;
   }
 
   private toEntity(domain: Product): any {
@@ -123,6 +167,7 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
       type: domain.type,
       startDate: domain.startDate,
       endDate: domain.endDate,
+      deletedAt: domain.getDeletedAt(),
       pricing: domain.getPricing().map((p) => ({
         id: p.id,
         productId: p.productId,
@@ -132,6 +177,7 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
         isActive: p.isActive,
         validFrom: p.validFrom,
         validTo: p.validTo,
+        deletedAt: p.getDeletedAt(),
       })),
       subscriptionTerms: domain.getSubscriptionTerms().map((t) => ({
         id: t.id,
@@ -142,6 +188,7 @@ export class ProductRepositoryAdapter implements ProductRepositoryPort {
         billingFrequency: t.billingFrequency,
         eolDate: t.eolDate,
         description: t.description,
+        deletedAt: t.getDeletedAt(),
       })),
     };
   }

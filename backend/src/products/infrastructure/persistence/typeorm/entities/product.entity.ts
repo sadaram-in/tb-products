@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  DeleteDateColumn,
+} from 'typeorm';
 import { ProductPricingEntity } from './product-pricing.entity';
 import { SubscriptionTermsEntity } from './subscription-terms.entity';
 
@@ -36,6 +42,9 @@ export class ProductEntity {
 
   @Column({ name: 'updated_at', type: 'timestamp with time zone' })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', nullable: true })
+  deletedAt?: Date;
 
   @OneToMany(() => ProductPricingEntity, (pricing) => pricing.product, {
     cascade: true,
