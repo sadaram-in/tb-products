@@ -31,5 +31,6 @@ jobs:
             -p branch="${GITHUB_REF_NAME}" \
             -p containerRegistryURL="ghcr.io/${GITHUB_REPOSITORY_OWNER_PART_SLUG}/${GITHUB_REPOSITORY_NAME_PART}:${GITHUB_SHA_SHORT}" \
             -p gitUrlNoProtocol="git@github.com:${GITHUB_REPOSITORY_OWNER_PART_SLUG}" \
+            -p dockerfilepath="backend" \
             -p shortSha="${GITHUB_SHA_SHORT}" \
             --wait --log

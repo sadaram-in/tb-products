@@ -9,7 +9,7 @@ spec:
         - - name: publish-container
             templateRef:
               name: cwft-kaniko
-              template: build-push-ssh
+              template: build-push-ssh-tb
               clusterScope: true
             arguments:
               parameters:
@@ -21,3 +21,5 @@ spec:
                   value: '{{workflow.parameters.containerRegistryURL}}'
                 - name: gitUrlNoProtocol
                   value: '{{workflow.parameters.gitUrlNoProtocol}}'
+                - name: dockerfilepath
+                  value: '{{workflow.parameters.dockerfilepath}}'
