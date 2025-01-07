@@ -22,7 +22,7 @@ USER node
 FROM node:lts-bookworm-slim as build
 WORKDIR /var/api
 COPY --from=dev --chown=node:node /var/api ./
-RUN npm install -g npm@10.2.3 && npm ci && npm run build
+RUN npm install -g npm@10.2.3 && npm install && npm run build
 
 ##
 ## PRODUCTION
