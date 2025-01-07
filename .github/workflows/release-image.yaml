@@ -1,4 +1,7 @@
 name: release
+env:
+  ARGO_NAMESPACE: argo
+  ARGO_VERSION: v3.4.1
 on: workflow_dispatch
 jobs:
   release-image:
